@@ -1,0 +1,267 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>webpack定制前端开发环境 | Gridea</title>
+<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1625565714182">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://capfour.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="webpack定制前端开发环境 | Gridea - Atom Feed" href="https://capfour.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="基础概念
+webpack 本质上是一个打包工具，它会根据代码的内容解析模块依赖，帮助开发者把多个模块的代码进行打包。
+
+核心概念
+entry
+如上图所示，在多个代码模块中会有一个起始的 .js 文件，这个便是 webpack 构建的入口，即..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://capfour.github.io/">
+  <img class="avatar" src="https://capfour.github.io//images/avatar.png?v=1625565714182" alt="">
+  </a>
+  <h1 class="site-title">
+    Gridea
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              webpack定制前端开发环境
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-07-06
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="基础概念">基础概念</h2>
+<p>webpack 本质上是一个打包工具，它会根据代码的内容解析模块依赖，帮助开发者把多个模块的代码进行打包。<br>
+<img src="https://capfour.github.io//post-images/1625563328722.png" alt="" loading="lazy"></p>
+<h2 id="核心概念">核心概念</h2>
+<h3 id="entry"><strong>entry</strong></h3>
+<p>如上图所示，在多个代码模块中会有一个起始的 .js 文件，这个便是 webpack 构建的入口，即 entry。webpack 会读取这个文件，并从它开始解析依赖，在内部构件一个依赖图，这个依赖图会引用项目中使用到的各个模块，然后进行打包，生成一个或者多个 bundle 文件。</p>
+<p>入口可以使用 entry 字段来进行配置：</p>
+<pre><code>module.exports = {
+    entry: './src/index.js' 
+}
+
+// 上述配置等同于
+module.exports = {
+    entry: {
+        main: './src/index.js'
+    }
+}
+</code></pre>
+<h3 id="output"><strong>output</strong></h3>
+<p>webpack 的输出即指 webpack 最终构建出来的静态文件，可以看看上面 webpack 官方图片右侧的那些文件。当然，webpack 构建生成的文件名、路径等都是可以配置的，在配置文件中使用 output 字段来进行设置：</p>
+<pre><code>module.exports = {
+    //......
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js',
+    },
+}
+
+// 或者使用 entry 的名称
+module.exports = {
+    entry: {
+        main: './src/index.js' // main 为 entry 的名称
+    },
+    output: {
+        filename: '[name].js', // 使用 [name] 来引用 entry 名称，在这里即为 main
+        path: path.join(__dirname, '/dist/[hash]'),
+            // 路径中使用 hash，每次构建时会有一个不同 hash 值，可以用于避免发布新版本时浏览器存             导致代码没有更新
+            // 文件名中也可以使用 hash
+        },
+}
+</code></pre>
+<p>我们一开始直接使用 webpack 构建时，默认创建的输出内容就是 ./dist/main.js。</p>
+<h3 id="loader"><strong>loader</strong></h3>
+<p>我们在前端构建中会遇见需要使用各式各样的文件，例如 css 代码，图片，模板代码等。webpack 中提供一种处理多种文件格式的机制，便是使用 loader。我们可以把 loader 理解为是一个转换器，负责把某种文件格式的内容转换成 webpack 可以支持打包的模块。</p>
+<p>举个例子，在没有添加额外插件的情况下，webpack 会默认把所有依赖打包成 js 文件，如果入口文件依赖一个 .hbs 的模板文件以及一个 .css 的样式文件，那么我们需要 handlebars-loader 来处理 .hbs 文件，需要 css-loader 来处理 .css 文件（这里其实还需要 style-loader，后续详解），最终把不同格式的文件都解析成 js 代码，以便打包后在浏览器中运行。</p>
+<p>当我们需要使用不同的 loader 来解析处理不同类型的文件时，我们可以在 module.rules 字段下来配置相关的规则，例如使用 Babel 来处理 .js 文件：</p>
+<pre><code>module.exports = {
+    //......
+    module: {
+            rules: [
+                {
+                    test: /\.css/,
+                    include: [
+                        path.resolve(__dirname, 'src'),
+                    ],
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        'css-loader',
+                    ],
+                }
+            ]
+    },
+}
+</code></pre>
+<h3 id="plugin"><strong>plugin</strong></h3>
+<p>在 webpack 的构建流程中，plugin 用于处理更多其他的一些构建任务。可以这么理解，模块代码转换的工作由 loader 来处理，除此之外的其他任何工作都可以交由 plugin 来完成。通过添加我们需要的 plugin，可以满足更多构建中特殊的需求。例如，使用 copy-webpack-plugin 来复制其他不需要 loader 处理的文件，只需在配置中通过 plugins 字段添加新的 plugin 即可：</p>
+<pre><code>npm install copy-webpack-plugin -D
+</code></pre>
+<p>插件通常为第三方的 npm package，都需要安装后才能使用</p>
+<pre><code>const CopyPlugin = require('copy-webpack-plugin');
+
+module.exports = {
+// ...
+
+plugins: [
+    new CopyPlugin([
+    { from: 'src/public', to: 'public' },
+    ]),
+],
+};
+</code></pre>
+<p>plugin 理论上可以干涉 webpack 整个构建流程，可以在流程的每一个步骤中定制自己的构建需求。继续深<br>
+入 webpack 配置之后，我们会介绍如何开发 plugin，让读者们在必要时，也可以在 webpack 的基础上开发 plugin 来应对一些项目的特殊构建需求。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5">基础概念</a></li>
+<li><a href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5">核心概念</a>
+<ul>
+<li><a href="#entry"><strong>entry</strong></a></li>
+<li><a href="#output"><strong>output</strong></a></li>
+<li><a href="#loader"><strong>loader</strong></a></li>
+<li><a href="#plugin"><strong>plugin</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://capfour.github.io/post/hello-gridea/">
+              <h3 class="post-title">
+                Hello Gridea
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://capfour.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
