@@ -7,7 +7,7 @@
 <meta name="description" content="FEfour的笔记">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1625628948027">
+<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1625639260123">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
@@ -70,12 +70,12 @@
 3, bind 除了返回是函数以外，它的参数和 call 一样；与上面两者不同的是bind不会立即执行函数，而call和apply会执行函数
 </code></pre>
 <h2 id="二-手动实现三个函数">二、手动实现三个函数</h2>
-<h2 id="1-知识点">1、知识点</h2>
+<h3 id="1-tips">1、<strong>tips</strong></h3>
 <pre><code>1、实际上，每个 JavaScript 函数都是一个 Function 对象
-console.log((function(){}).constructor === Function)
+    console.log((function(){}).constructor === Function)
 2、自定义一个全局方法可以在Function.prototype上定义一个方法
 </code></pre>
-<h2 id="2-call">2、call</h2>
+<h3 id="2-call">2、<strong>call</strong></h3>
 <pre><code>Function.prototype.myCall = function (context) {
     //调用对象校验
     if (typeof this !== 'function') {
@@ -93,7 +93,7 @@ console.log((function(){}).constructor === Function)
     return result
 }
 </code></pre>
-<h2 id="3-apply">3, apply</h2>
+<h3 id="3-apply">3、 <strong>apply</strong></h3>
 <pre><code>Function.prototype.myApply = function (context) {
      //调用对象校验
     if(typeof this !== 'function') {
@@ -112,7 +112,7 @@ console.log((function(){}).constructor === Function)
     return result
 }
 </code></pre>
-<h2 id="4-bind">4、bind</h2>
+<h3 id="4-bind">4、<strong>bind</strong></h3>
 <pre><code>Function.prototype.myBind = function(context) {
     if (typeof this !== 'function') {
         throw new TypeError('error')
@@ -124,7 +124,7 @@ console.log((function(){}).constructor === Function)
             return fn.apply(this instanceof Fn ? this : context, args.concat(...arguments)) }
 }
 </code></pre>
-<h2 id="三-总结">三, 总结</h2>
+<h3 id="三-总结">三, <strong>总结</strong></h3>
 <pre><code>bind和call与apply的区别是不会立即调用函数，常用于改变回调函数的参数，bind的参数传递方式和call一样
 </code></pre>
 
@@ -150,7 +150,7 @@ console.log((function(){}).constructor === Function)
 
       <div class="sm-12 md-4 col sidebar">
   <div class="paper info-container">
-    <img src="https://capfour.github.io//images/avatar.png?v=1625628948027" class="no-responsive avatar">
+    <img src="https://capfour.github.io//images/avatar.png?v=1625639260123" class="no-responsive avatar">
     <div class="text-muted">FEfour的笔记</div>
     <div class="social-container">
       
