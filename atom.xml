@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://capfour.github.io/</id>
     <title>FEfour的笔记</title>
-    <updated>2021-07-07T03:28:08.995Z</updated>
+    <updated>2021-07-07T03:35:53.970Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://capfour.github.io/"/>
     <link rel="self" href="https://capfour.github.io/atom.xml"/>
@@ -10,6 +10,77 @@
     <logo>https://capfour.github.io/images/avatar.png</logo>
     <icon>https://capfour.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, FEfour的笔记</rights>
+    <entry>
+        <title type="html"><![CDATA[手动实现call(), apply(), bind()]]></title>
+        <id>https://capfour.github.io/post/shou-dong-shi-xian-call-apply-bind/</id>
+        <link href="https://capfour.github.io/post/shou-dong-shi-xian-call-apply-bind/">
+        </link>
+        <updated>2021-07-07T02:33:54.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="一-call-apply-bind-其作用都是改变函数运行时this的指向">一、call、apply、bind 其作用都是改变函数运行时this的指向</h2>
+<pre><code>1, call 的参数是直接放进去的，用逗号分隔   
+2, apply 的所有参数都必须放在一个数组里面传进去  
+3, bind 除了返回是函数以外，它的参数和 call 一样；与上面两者不同的是bind不会立即执行函数，而call和apply会执行函数
+</code></pre>
+<h2 id="二-手动实现三个函数">二、手动实现三个函数</h2>
+<h2 id="1-知识点">1、知识点</h2>
+<pre><code>1、实际上，每个 JavaScript 函数都是一个 Function 对象
+console.log((function(){}).constructor === Function)
+2、自定义一个全局方法可以在Function.prototype上定义一个方法
+</code></pre>
+<h2 id="2-call">2、call</h2>
+<pre><code>Function.prototype.myCall = function (context) {
+    //调用对象校验
+    if (typeof this !== 'function') {
+        console.log(&quot;type error&quot;);
+    }
+    //this指向默认window
+    context = context || window
+
+    //获取参数
+    let args = [...arguments].slice(1)
+
+    context.fn = this
+    const result = context.fn(...args)
+    delete context.fn
+    return result
+}
+</code></pre>
+<h2 id="3-apply">3, apply</h2>
+<pre><code>Function.prototype.myApply = function (context) {
+     //调用对象校验
+    if(typeof this !== 'function') {
+        throw new TypeError('error')
+    }
+    let result = null
+   //this指向默认window
+    context = context || window
+    // 把当前调用的函数赋值给传入对象的
+    // context.fn 可以理解为： context.prototype.
+    context.fn = this
+    if (arguments[1]) {
+        result = context.fn([...arguments[1]]) // 调用赋值的函数
+    }
+    delete context.fn
+    return result
+}
+</code></pre>
+<h2 id="4-bind">4、bind</h2>
+<pre><code>Function.prototype.myBind = function(context) {
+    if (typeof this !== 'function') {
+        throw new TypeError('error')
+    }
+    // 获取参数
+    let args = [...arguments].slice(1) // 第一个是对象
+    context.fn = this // 调用对象
+    return function Fn() {
+            return fn.apply(this instanceof Fn ? this : context, args.concat(...arguments)) }
+}
+</code></pre>
+<h2 id="三-总结">三, 总结</h2>
+<pre><code>bind和call与apply的区别是不会立即调用函数，常用于改变回调函数的参数，bind的参数传递方式和call一样
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[webpack定制前端开发环境]]></title>
         <id>https://capfour.github.io/post/webpack-ding-zhi-qian-duan-kai-fa-huan-jing/</id>
