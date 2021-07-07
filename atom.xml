@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://capfour.github.io/</id>
-    <title>Capfour的笔记</title>
-    <updated>2021-07-07T03:25:20.817Z</updated>
+    <title>FEfour的笔记</title>
+    <updated>2021-07-07T03:26:42.485Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://capfour.github.io/"/>
     <link rel="self" href="https://capfour.github.io/atom.xml"/>
-    <subtitle>Capfour的笔记</subtitle>
+    <subtitle>FEfour的笔记</subtitle>
     <logo>https://capfour.github.io/images/avatar.png</logo>
     <icon>https://capfour.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, Capfour的笔记</rights>
+    <rights>All rights reserved 2021, FEfour的笔记</rights>
     <entry>
         <title type="html"><![CDATA[webpack定制前端开发环境]]></title>
         <id>https://capfour.github.io/post/webpack-ding-zhi-qian-duan-kai-fa-huan-jing/</id>
