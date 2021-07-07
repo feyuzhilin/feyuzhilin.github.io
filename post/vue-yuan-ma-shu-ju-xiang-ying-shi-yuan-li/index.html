@@ -1,22 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://capfour.github.io/</id>
-    <title>FEfour的笔记</title>
-    <updated>2021-07-07T09:54:34.830Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://capfour.github.io/"/>
-    <link rel="self" href="https://capfour.github.io/atom.xml"/>
-    <subtitle>FEfour的笔记</subtitle>
-    <logo>https://capfour.github.io/images/avatar.png</logo>
-    <icon>https://capfour.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, FEfour的笔记</rights>
-    <entry>
-        <title type="html"><![CDATA[vue源码-数据响应式原理]]></title>
-        <id>https://capfour.github.io/post/vue-yuan-ma-shu-ju-xiang-ying-shi-yuan-li/</id>
-        <link href="https://capfour.github.io/post/vue-yuan-ma-shu-ju-xiang-ying-shi-yuan-li/">
-        </link>
-        <updated>2021-07-07T06:46:32.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="学习目的"><strong>学习目的</strong></h3>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>vue源码-数据响应式原理 | FEfour的笔记</title>
+<meta name="description" content="FEfour的笔记">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1625651667010">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://capfour.github.io//styles/main.css">
+
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+  </head>
+  <body>
+  
+    <nav class="navbar border fixed split-nav">
+  <div class="nav-brand">
+    <h3><a href="https://capfour.github.io/">FEfour的笔记</a></h3>
+  </div>
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+        
+          <li>
+            
+              <a href="/" class="menu">
+                首页
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div id="top" class="row site">
+      <div class="sm-12 md-8 col">
+        <div class="paper">
+          <article class="article">
+            <h1>vue源码-数据响应式原理</h1>
+            <p class="article-meta">
+              2021-07-07
+              
+            </p>
+            
+            <div class="post-content">
+              <h3 id="学习目的"><strong>学习目的</strong></h3>
 <ul>
 <li>模拟一个最小版本的vue</li>
 <li>实际项目中出问题的原理层面的解决
@@ -256,77 +304,101 @@
 <li><strong>发布/订阅模式</strong>由统一调度中心调用，因此发布者和订阅者不需要知道对方的存在。</li>
 </ul>
 <figure data-type="image" tabindex="1"><img src="https://capfour.github.io//post-images/1625651644043.jpg" alt="" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[手动实现call(), apply(), bind()]]></title>
-        <id>https://capfour.github.io/post/shou-dong-shi-xian-call-apply-bind/</id>
-        <link href="https://capfour.github.io/post/shou-dong-shi-xian-call-apply-bind/">
-        </link>
-        <updated>2021-07-07T02:33:54.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="一-call-apply-bind-其作用都是改变函数运行时this的指向">一、call、apply、bind 其作用都是改变函数运行时this的指向</h2>
-<pre><code>1, call 的参数是直接放进去的，用逗号分隔   
-2, apply 的所有参数都必须放在一个数组里面传进去  
-3, bind 除了返回是函数以外，它的参数和 call 一样；与上面两者不同的是bind不会立即执行函数，而call和apply会执行函数
-</code></pre>
-<h2 id="二-手动实现三个函数">二、手动实现三个函数</h2>
-<h3 id="1-tips">1、<strong>tips</strong></h3>
-<pre><code>1、实际上，每个 JavaScript 函数都是一个 Function 对象
-    console.log((function(){}).constructor === Function)
-2、自定义一个全局方法可以在Function.prototype上定义一个方法
-</code></pre>
-<h3 id="2-call">2、<strong>call</strong></h3>
-<pre><code>Function.prototype.myCall = function (context) {
-    //调用对象校验
-    if (typeof this !== 'function') {
-        console.log(&quot;type error&quot;);
-    }
-    //this指向默认window
-    context = context || window
 
-    //获取参数
-    let args = [...arguments].slice(1)
+            </div>
+          </article>
+        </div>
+        <div class="paper" data-aos="fade-in">
+          
+            <div class="next-post">
+              <div class="next">
+                下一篇
+              </div>
+              <a href="https://capfour.github.io/post/shou-dong-shi-xian-call-apply-bind/">
+                <h3 class="post-title">
+                  手动实现call(), apply(), bind()
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+        
+      </div>
 
-    context.fn = this
-    const result = context.fn(...args)
-    delete context.fn
-    return result
-}
-</code></pre>
-<h3 id="3-apply">3、 <strong>apply</strong></h3>
-<pre><code>Function.prototype.myApply = function (context) {
-     //调用对象校验
-    if(typeof this !== 'function') {
-        throw new TypeError('error')
-    }
-    let result = null
-   //this指向默认window
-    context = context || window
-    // 把当前调用的函数赋值给传入对象的
-    // context.fn 可以理解为： context.prototype.
-    context.fn = this
-    if (arguments[1]) {
-        result = context.fn([...arguments[1]]) // 调用赋值的函数
-    }
-    delete context.fn
-    return result
-}
-</code></pre>
-<h3 id="4-bind">4、<strong>bind</strong></h3>
-<pre><code>Function.prototype.myBind = function(context) {
-    if (typeof this !== 'function') {
-        throw new TypeError('error')
-    }
-    // 获取参数
-    let args = [...arguments].slice(1) // 第一个是对象
-    context.fn = this // 调用对象
-    return function Fn() {
-            return fn.apply(this instanceof Fn ? this : context, args.concat(...arguments)) }
-}
-</code></pre>
-<h3 id="三-总结">三, <strong>总结</strong></h3>
-<pre><code>bind和call与apply的区别是不会立即调用函数，常用于改变回调函数的参数，bind的参数传递方式和call一样
-</code></pre>
-]]></content>
-    </entry>
-</feed>
+      <div class="sm-12 md-4 col sidebar">
+  <div class="paper info-container">
+    <img src="https://capfour.github.io//images/avatar.png?v=1625651667010" class="no-responsive avatar">
+    <div class="text-muted">FEfour的笔记</div>
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      最新文章
+    </div>
+    <div class="row">
+      <ul>
+        
+          
+            <li>
+              <a href="https://capfour.github.io/post/vue-yuan-ma-shu-ju-xiang-ying-shi-yuan-li/">vue源码-数据响应式原理</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://capfour.github.io/post/shou-dong-shi-xian-call-apply-bind/">手动实现call(), apply(), bind()</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://capfour.github.io/post/webpack-ding-zhi-qian-duan-kai-fa-huan-jing/">webpack定制前端开发环境</a>
+            </li>
+          
+        
+      </ul>
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      标签列表
+    </div>
+    <div class="row">
+      
+    </div>
+  </div>
+  <div class="paper">
+    无限进步 | <a class="rss" href="https://capfour.github.io//atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+
+
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+</script>
+
+
+
+
+  </body>
+</html>
