@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://capfour.github.io/</id>
     <title>FEfour的笔记</title>
-    <updated>2021-07-07T09:54:34.830Z</updated>
+    <updated>2021-07-09T09:41:06.316Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://capfour.github.io/"/>
     <link rel="self" href="https://capfour.github.io/atom.xml"/>
@@ -10,6 +10,268 @@
     <logo>https://capfour.github.io/images/avatar.png</logo>
     <icon>https://capfour.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, FEfour的笔记</rights>
+    <entry>
+        <title type="html"><![CDATA[Vue源码-Vue响应式原理模拟]]></title>
+        <id>https://capfour.github.io/post/vue-yuan-ma-vue-xiang-ying-shi-yuan-li-mo-ni/</id>
+        <link href="https://capfour.github.io/post/vue-yuan-ma-vue-xiang-ying-shi-yuan-li-mo-ni/">
+        </link>
+        <updated>2021-07-09T02:04:21.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="整体分析"><strong>整体分析</strong></h3>
+<ul>
+<li>Vue基本结构</li>
+<li>Vue 实例内容</li>
+<li>整体结构<br>
+<img src="https://capfour.github.io//post-images/1625796652037.jpg" alt="" loading="lazy"></li>
+<li>Vue
+<ul>
+<li>把data中的成员注入到Vue实例，并且把data中的成员转成getter/setter</li>
+</ul>
+</li>
+<li>Observer
+<ul>
+<li>能够对数据对象的所有属性进行监听，如有变动可拿到最新值并通知Dep</li>
+</ul>
+</li>
+<li>Compiler
+<ul>
+<li>解析每个元素中的指令/插值表达式，并替换成相应的数据</li>
+</ul>
+</li>
+<li>Dep
+<ul>
+<li>添加观察者（watcher），当数据变化通知所有的观察者</li>
+</ul>
+</li>
+<li>Watcher
+<ul>
+<li>数据变化更新视图</li>
+</ul>
+</li>
+</ul>
+<h3 id="vue"><strong>Vue</strong></h3>
+<ul>
+<li>
+<p>功能</p>
+<ul>
+<li>负责接受初始化的参数（选项）</li>
+<li>负责把data中的属性注入到Vue实例，转换成getter/setter</li>
+<li>负责调用observer监听data中所有的属性的变化</li>
+<li>负责调用compiler解析指令/插值表达式</li>
+</ul>
+</li>
+<li>
+<p>结构<br>
+<img src="https://capfour.github.io//post-images/1625813961500.jpg" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>代码</p>
+<pre><code>  class Vue {
+      constructor (options) {
+          // 1.保存选项的数据
+          this.$options = options | | {}
+          this.$data = options.data | | {}
+          const el = options.el
+          this.$el = typeof options.el === 'string' ? document.querySelector(el): el 
+          //2. 负责把data 注入到 Vue实例
+          this._proxyData(this.$data)
+      }
+
+      _proxyData (data){
+          //遍历data 的所有属性
+          object.defineproperty(this, key, {
+              get(){
+                  return data[key]
+              },
+              set(newValue){
+                  if(data[key] === newValue) return;
+                  data[key] = newValue
+              }
+          })
+      }
+  }
+</code></pre>
+</li>
+</ul>
+<h3 id="observer"><strong>Observer</strong></h3>
+<ul>
+<li>
+<p>功能</p>
+<ul>
+<li>负责把data选项中的属性转换成响应式数据</li>
+<li>data中的某个属性也是对象，把该属性转换成响应式数据</li>
+<li>数据变化发送通知</li>
+</ul>
+</li>
+<li>
+<p>结构<br>
+<img src="https://capfour.github.io//post-images/1625814958011.jpg" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>代码</p>
+<pre><code>  //负责数据劫持,把$data中的成员转换成 getter/setter
+  class Observer {
+      constructor (data) {
+          this.walk(data)
+      }
+      //1. 判断数据是否是对象，如果不是对象就return
+      //2.如果是对象，就遍历对象的所有属性，设置为getter/setter
+      walk（data）{
+          if(!data || typeof data !== 'object') return;
+          object.keys(data).forEach(key =&gt; {
+              this.defineReactive(data, key, data[key])
+          })
+      }
+      //定义响应式成员
+      defineReactive（data, key, val）{
+          const _this = this
+          //如果 val 是对象，继续设置它下面的成员为响应式数据
+          this.walk(val)
+          object.defineProperty(data, key, {
+              configurable: true,
+              enumerable: true,
+              get () {
+                  return val
+              },
+              set (newValue) {
+                  if (newValue === val) return;
+                  //如果newValue是对象，设置newValue的成员为响应式
+                  this.walk(newValue)
+                  val = newValue
+              }
+          })
+      }
+  }
+</code></pre>
+</li>
+</ul>
+<h3 id="compiler"><strong>Compiler</strong></h3>
+<ul>
+<li>功能
+<ul>
+<li>负责编译模板，解析指令/插值表达式</li>
+<li>负责页面的首次渲染</li>
+<li>当数据变化后重新渲染视图</li>
+</ul>
+</li>
+<li>结构<br>
+<img src="https://capfour.github.io//post-images/1625820312200.jpg" alt="" loading="lazy"></li>
+</ul>
+<h4 id="compile"><strong>compile</strong></h4>
+<pre><code>    //负责解析指令/插值表达式
+    class Compiler {
+        constructor (vm) {
+            this.vm = vm
+            this.el = vm.$el
+            //编译模板
+            this.compile(this.el)
+        }
+        //编译模板
+        //处理文本节点和元素节点
+        compile（）{
+            const nodes = el.childNodes
+            Array.from(nodes).forEach(node =&gt; {
+                //判断是文本节点还是元素节点
+                if(this.isTextNode){
+                    this.compileText(node)
+                }else if (this.isElementNode(node)){
+                    this.compileElement(node)
+                }
+                if(node.childNodes &amp;&amp; node.childNodes.length) {
+                    this.compile(node)
+                }
+            })
+        }
+
+        //判断是否是文本节点
+        isTextNode ( node ) {
+            return node.nodeType === 3
+        }
+        //判断是否是元素节点
+        isElementNode (node ) {
+            return node.nodeType === 1
+        }
+        //判断是否是以 v- 开头的指令
+        isDirective (attrName){
+            return attrName.startsWith('v-')
+        }
+        //编译文本节点
+        compileText（node）{
+
+        }
+        //编译元素节点
+        compileElement（node）{
+
+        }
+    }
+</code></pre>
+<h4 id="compiletext"><strong>compileText()</strong></h4>
+<ul>
+<li>
+<p>负责编译插值表达式</p>
+<pre><code>  //编译文本节点
+  compileText (node) {
+      const reg = /\{\{(.+)\}\}/
+      //获取文本节点内容
+      const value = node.textContent
+      if(reg.test(value)) {
+          //插值表达式中的值就是我们要的属性名称
+          const key = RegExp.$1.trim()
+          //把插值表达式替换成具体的值
+          node.textContent = value.replace(reg, this.vm[key])
+      }
+  }
+</code></pre>
+</li>
+</ul>
+<h4 id="compileelement"><strong>compileElement()</strong></h4>
+<ul>
+<li>
+<p>负责编译元素的指令</p>
+</li>
+<li>
+<p>处理v-text 的首次渲染</p>
+</li>
+<li>
+<p>处理v-model的首次渲染</p>
+<pre><code>  //编译属性节点
+  compileElement (node) {
+      //遍历元素节点中的所有属性，找到指令
+      Array.from(node.attrbutes).forEach(attr =&gt; {
+          let attrName = attr.name
+          //判断当前的属性名称是否是指令
+          if(this.isDirective(attrName)) {
+              //attrName 的形式 v-text v-model
+              //截取属性的名称，获取 text model
+              atttrName = attrName.substr(2)
+              //获取属性的名称，属性的名称就是我们数据对象那个的属性 v-text = &quot;name&quot;,获取的是name
+              const key = attr.value
+              //处理不同的指令
+              this.update(node, key, attrName)
+          }
+      })
+  }
+
+  //负责更新DOM
+  //创建Watcher
+  update(node, key, dir){
+      // node 节点，key 数据的属性名称， dir 指令的后半部分
+      const updaterFn = this[dir + 'updater']
+      updaterFn &amp;&amp; updaterFn(node, this.vm [key])
+  }
+
+  //v-text 指令的更新办法
+  textUpdater(node, value) {
+      node.textContent = value
+  }
+
+  //v-model 指令的更新方法
+  modelUpdater (node, value){
+      node.value = value
+  }</code></pre>
+</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[vue源码-数据响应式原理]]></title>
         <id>https://capfour.github.io/post/vue-yuan-ma-shu-ju-xiang-ying-shi-yuan-li/</id>
