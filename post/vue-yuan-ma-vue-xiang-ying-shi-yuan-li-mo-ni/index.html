@@ -7,7 +7,7 @@
 <meta name="description" content="FEfour的笔记">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1626329074623">
+<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1626925384276">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
@@ -315,7 +315,48 @@
   //v-model 指令的更新方法
   modelUpdater (node, value){
       node.value = value
-  }</code></pre>
+  }
+</code></pre>
+</li>
+</ul>
+<h4 id="depdependency"><strong>Dep(Dependency)</strong></h4>
+<figure data-type="image" tabindex="1"><img src="https://capfour.github.io//post-images/1626329292374.png" alt="" loading="lazy"></figure>
+<ul>
+<li>
+<p>功能</p>
+<ul>
+<li>收集依赖，添加观察者（watcher）</li>
+<li>通知所有观察者</li>
+</ul>
+</li>
+<li>
+<p>结构<br>
+<img src="https://capfour.github.io//post-images/1626329374340.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>代码</p>
+<pre><code>  class Dep {
+      constructor () {
+          //存储所有的观察者
+          this.subs = []
+      }
+      //添加观察者
+      addsub (sub){
+          if(sub &amp;&amp; sub.update){
+              this.subs.push(sub)
+          }
+      }
+      //通知所有观察者
+      notify (){
+          this.subs.forEach(sub=&gt;{
+              sub.update()
+          })
+      }
+  }
+</code></pre>
+</li>
+<li>
+<p>在compiler.js中收集依赖，发送通知</p>
 </li>
 </ul>
 
@@ -341,7 +382,7 @@
 
       <div class="sm-12 md-4 col sidebar">
   <div class="paper info-container">
-    <img src="https://capfour.github.io//images/avatar.png?v=1626329074623" class="no-responsive avatar">
+    <img src="https://capfour.github.io//images/avatar.png?v=1626925384276" class="no-responsive avatar">
     <div class="text-muted">FEfour的笔记</div>
     <div class="social-container">
       
@@ -379,12 +420,6 @@
           
             <li>
               <a href="https://capfour.github.io/post/shou-dong-shi-xian-call-apply-bind/">手动实现call(), apply(), bind()</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://capfour.github.io/post/webpack-ding-zhi-qian-duan-kai-fa-huan-jing/">webpack定制前端开发环境</a>
             </li>
           
         

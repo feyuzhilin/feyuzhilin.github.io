@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://capfour.github.io/</id>
     <title>FEfour的笔记</title>
-    <updated>2021-07-15T06:04:38.265Z</updated>
+    <updated>2021-07-22T03:43:10.332Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://capfour.github.io/"/>
     <link rel="self" href="https://capfour.github.io/atom.xml"/>
@@ -267,7 +267,48 @@
   //v-model 指令的更新方法
   modelUpdater (node, value){
       node.value = value
-  }</code></pre>
+  }
+</code></pre>
+</li>
+</ul>
+<h4 id="depdependency"><strong>Dep(Dependency)</strong></h4>
+<figure data-type="image" tabindex="1"><img src="https://capfour.github.io//post-images/1626329292374.png" alt="" loading="lazy"></figure>
+<ul>
+<li>
+<p>功能</p>
+<ul>
+<li>收集依赖，添加观察者（watcher）</li>
+<li>通知所有观察者</li>
+</ul>
+</li>
+<li>
+<p>结构<br>
+<img src="https://capfour.github.io//post-images/1626329374340.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>代码</p>
+<pre><code>  class Dep {
+      constructor () {
+          //存储所有的观察者
+          this.subs = []
+      }
+      //添加观察者
+      addsub (sub){
+          if(sub &amp;&amp; sub.update){
+              this.subs.push(sub)
+          }
+      }
+      //通知所有观察者
+      notify (){
+          this.subs.forEach(sub=&gt;{
+              sub.update()
+          })
+      }
+  }
+</code></pre>
+</li>
+<li>
+<p>在compiler.js中收集依赖，发送通知</p>
 </li>
 </ul>
 ]]></content>
