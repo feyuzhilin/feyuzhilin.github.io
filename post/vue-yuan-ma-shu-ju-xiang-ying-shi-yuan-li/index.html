@@ -7,7 +7,7 @@
 <meta name="description" content="FEfour的笔记">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1626925384276">
+<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1627376594777">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
@@ -102,81 +102,71 @@
 <h3 id="数据响应式的核心原理"><strong>数据响应式的核心原理</strong></h3>
 <h3 id="vue-2x">Vue 2.x</h3>
 <ul>
-<li>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">MDN - Object.defineProperty</a></p>
-</li>
-<li>
-<p>浏览器兼容IE8以上（不兼容IE8）</p>
-<pre><code>  // 模拟 Vue 中的 data 选项
-  let data = {
-      msg: 'hello'
-  }
-
-  // 模拟  Vue 的实例
-  let vm = { }
-
-  //数据劫持：当访问或者设置vm中的成员的时候，做一些干预操作
-  object.defineProperty(vm, 'msg', {
-      // 可枚举（可遍历）
-      enumerable：true，
-      // 可配置（可以使用delete删除，可以通过defineProperty重新定义）
-      configurable: true,
-      // 当获取值的时候执行
-      get(){
-          ocnsole.log('get',data.msg)
-      },
-      // 当设置值的时候执行
-      set(newValue){
-          console.log('set',newValue)
-          if(newValue === data.msg) return;
-          data.msg = newValue
-          // 数据更改，更新 DOM 的值
-          document.querySelector('#app').textContent = data.msg
-      }
-  })
-
-  //测试
-  vm.msg = 'Hello world'
-  console.log(vm.msg)
-</code></pre>
-</li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">MDN - Object.defineProperty</a></li>
+<li>浏览器兼容IE8以上（不兼容IE8）</li>
 </ul>
+<pre><code class="language-js">// 模拟 Vue 中的 data 选项
+let data = {
+    msg: 'hello'
+}
+
+// 模拟  Vue 的实例
+let vm = { }
+
+//数据劫持：当访问或者设置vm中的成员的时候，做一些干预操作
+object.defineProperty(vm, 'msg', {
+    // 可枚举（可遍历）
+    enumerable：true，
+    // 可配置（可以使用delete删除，可以通过defineProperty重新定义）
+    configurable: true,
+    // 当获取值的时候执行
+    get(){
+        ocnsole.log('get',data.msg)
+    },
+    // 当设置值的时候执行
+    set(newValue){
+        console.log('set',newValue)
+        if(newValue === data.msg) return;
+        data.msg = newValue
+        // 数据更改，更新 DOM 的值
+        document.querySelector('#app').textContent = data.msg
+    }
+})
+
+//测试
+vm.msg = 'Hello world'
+console.log(vm.msg)
+</code></pre>
 <h3 id="vue-3x">Vue 3.x</h3>
 <ul>
-<li>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy">MDN - Proxy</a></p>
-</li>
-<li>
-<p>直接监听对象，而非属性</p>
-</li>
-<li>
-<p>ES6中新增，IE不支持，性能由浏览器优化</p>
-<pre><code> // 模拟 Vue 中的data选项
- let data = {
-     msg: 'hello',
-     count: 0
- }
- // 模拟 Vue 实例
- let vm = new Proxy( data, {
-     //当访问 vm 成员会执行
-     get (target, key) {
-         console.log('get, key: ', key, target[key])
-         return target[key]
-     },
-     //当设置 vm 的成员会执行
-     set (target, key, newValue){
-         console.log('set,key: ', key, newValue)
-         if(target[key] === newValue) return;
-         target[key] = newValue
-         document.querySelector('#app').textContent = target[key]
-     }
- })
- //测试
- vm.msg = 'hello World'
- console.log(vm.msg)
-</code></pre>
-</li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy">MDN - Proxy</a></li>
+<li>直接监听对象，而非属性</li>
+<li>ES6中新增，IE不支持，性能由浏览器优化</li>
 </ul>
+<pre><code class="language-js">// 模拟 Vue 中的data选项
+let data = {
+    msg: 'hello',
+    count: 0
+}
+// 模拟 Vue 实例
+let vm = new Proxy( data, {
+    //当访问 vm 成员会执行
+    get (target, key) {
+        console.log('get, key: ', key, target[key])
+        return target[key]
+    },
+    //当设置 vm 的成员会执行
+    set (target, key, newValue){
+        console.log('set,key: ', key, newValue)
+        if(target[key] === newValue) return;
+        target[key] = newValue
+        document.querySelector('#app').textContent = target[key]
+    }
+})
+//测试
+vm.msg = 'hello World'
+console.log(vm.msg)
+</code></pre>
 <h3 id="发布订阅者模式和观察者模式"><strong>发布订阅者模式和观察者模式</strong></h3>
 <h4 id="发布订阅模式"><strong>发布/订阅模式</strong></h4>
 <ul>
@@ -191,113 +181,109 @@
 </li>
 <li>
 <p>vue 兄弟组件通信</p>
-<pre><code>  // eventBus.js 
-  // 事件中心 
-  let eventHub = new Vue() 
-
-  // ComponentA.vue 
-  // 发布者 
-
-  addTodo: function () {
-      // 发布消息(事件) 
-      eventHub.$emit('add-todo', { text: this.newTodoText })
-      this.newTodoText = ' ' 
-  }
-
-  // ComponentB.vue 
-  // 订阅者 
-
-  created: function () {
-      // 订阅消息(事件)
-      eventHub.$on('add-todo', this.addTodo) 
-  }
-</code></pre>
-</li>
-<li>
-<p>自定义事件实现</p>
-<pre><code>  class EventEmiter {
-      constructor() {
-          this.events = {}
-      }
-      emit(event, ...args) {
-          this.events[event].forEach(fn =&gt; {
-              fn.apply(this, args)
-          })
-      }
-      on(event, fn) {
-          if (this.events[event]) {
-              this.events[event].push(fn)
-          } else {
-              this.events[event] = [fn]
-          }
-      }
-      remove(event) {
-          delete this.events[event]
-      }
-  }
-
-  const eventHub = new EventEmiter()
-
-  eventHub.on('test', data =&gt; {
-      console.log(data)
-  })
-
-  eventHub.emit('test', 1)
-</code></pre>
 </li>
 </ul>
+<pre><code class="language-js">// eventBus.js 
+// 事件中心 
+let eventHub = new Vue() 
+
+// ComponentA.vue 
+// 发布者 
+
+addTodo: function () {
+    // 发布消息(事件) 
+    eventHub.$emit('add-todo', { text: this.newTodoText })
+    this.newTodoText = ' ' 
+}
+
+// ComponentB.vue 
+// 订阅者 
+
+created: function () {
+    // 订阅消息(事件)
+    eventHub.$on('add-todo', this.addTodo) 
+}
+</code></pre>
+<ul>
+<li>自定义事件实现</li>
+</ul>
+<pre><code class="language-js">class EventEmiter {
+    constructor() {
+        this.events = {}
+    }
+    emit(event, ...args) {
+        this.events[event].forEach(fn =&gt; {
+            fn.apply(this, args)
+        })
+    }
+    on(event, fn) {
+        if (this.events[event]) {
+            this.events[event].push(fn)
+        } else {
+            this.events[event] = [fn]
+        }
+    }
+    remove(event) {
+        delete this.events[event]
+    }
+}
+
+const eventHub = new EventEmiter()
+
+eventHub.on('test', data =&gt; {
+    console.log(data)
+})
+
+eventHub.emit('test', 1)
+</code></pre>
 <h4 id="观察者模式"><strong>观察者模式</strong></h4>
 <ul>
-<li>
-<p>观察者（订阅者）-- Watcher</p>
+<li>观察者（订阅者）-- Watcher
 <ul>
 <li>update(): 当事件发生时，具体要做的事</li>
 </ul>
 </li>
-<li>
-<p>目标（发布者） -- Dep</p>
+<li>目标（发布者） -- Dep
 <ul>
 <li>subs 数组：存储所有的观察者</li>
 <li>addSub() ：添加观察者</li>
 <li>notufy() : 当事件发生，调用所有的观察者的update() 方法</li>
 </ul>
 </li>
-<li>
-<p>没有事件中心</p>
-<pre><code>  // 目标（发布者）
-  // Dependency
-  calss Dep {
-      constructor(){
-          // 存储所有的观察者
-          this.subs = []
-      }
-      // 添加观察者
-      addSub(sub){
-          if(sub&amp;&amp;sub.update) {
-              this.subs.push(sub)
-          }
-      }
-      // 通知所有的观察者
-      notify(){
-          this.subs.forEach(sub=&gt;{
-              sub.update()
-          })
-      }
-  }
-  // 观察者（订阅者）
-  class watcher {
-      update(){
-          console.log('update')
-      }
-  }
-  // 测试
-  let dep = new Dep()
-  let watcher = new Watcher()
-  dep.addSub(watcher)
-  dep.notify()
-</code></pre>
-</li>
+<li>没有事件中心</li>
 </ul>
+<pre><code class="language-js">// 目标（发布者）
+// Dependency
+calss Dep {
+    constructor(){
+        // 存储所有的观察者
+        this.subs = []
+    }
+    // 添加观察者
+    addSub(sub){
+        if(sub&amp;&amp;sub.update) {
+            this.subs.push(sub)
+        }
+    }
+    // 通知所有的观察者
+    notify(){
+        this.subs.forEach(sub=&gt;{
+            sub.update()
+        })
+    }
+}
+// 观察者（订阅者）
+class watcher {
+    update(){
+        console.log('update')
+    }
+}
+// 测试
+let dep = new Dep()
+let watcher = new Watcher()
+dep.addSub(watcher)
+dep.notify()
+</code></pre>
 <h4 id="总结"><strong>总结</strong></h4>
 <ul>
 <li><strong>观察者模式</strong>是由具体目标调度，比如当事件触发，Dep就会去调用观察者的方法，所以观察者模式的订阅者与发布者之间是存在依赖的。</li>
@@ -327,7 +313,7 @@
 
       <div class="sm-12 md-4 col sidebar">
   <div class="paper info-container">
-    <img src="https://capfour.github.io//images/avatar.png?v=1626925384276" class="no-responsive avatar">
+    <img src="https://capfour.github.io//images/avatar.png?v=1627376594777" class="no-responsive avatar">
     <div class="text-muted">FEfour的笔记</div>
     <div class="social-container">
       

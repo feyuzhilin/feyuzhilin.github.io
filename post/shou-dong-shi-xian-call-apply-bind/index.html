@@ -7,7 +7,7 @@
 <meta name="description" content="FEfour的笔记">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1626925384276">
+<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1627376594777">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
@@ -76,7 +76,7 @@
 2、自定义一个全局方法可以在Function.prototype上定义一个方法
 </code></pre>
 <h3 id="2-call">2、<strong>call</strong></h3>
-<pre><code>Function.prototype.myCall = function (context) {
+<pre><code class="language-js">Function.prototype.myCall = function (context) {
     //调用对象校验
     if (typeof this !== 'function') {
         console.log(&quot;type error&quot;);
@@ -94,13 +94,13 @@
 }
 </code></pre>
 <h3 id="3-apply">3、 <strong>apply</strong></h3>
-<pre><code>Function.prototype.myApply = function (context) {
-     //调用对象校验
+<pre><code class="language-js">Function.prototype.myApply = function (context) {
+        //调用对象校验
     if(typeof this !== 'function') {
         throw new TypeError('error')
     }
     let result = null
-   //this指向默认window
+    //this指向默认window
     context = context || window
     // 把当前调用的函数赋值给传入对象的
     // context.fn 可以理解为： context.prototype.
@@ -113,7 +113,7 @@
 }
 </code></pre>
 <h3 id="4-bind">4、<strong>bind</strong></h3>
-<pre><code>Function.prototype.myBind = function(context) {
+<pre><code class="language-js">Function.prototype.myBind = function(context) {
     if (typeof this !== 'function') {
         throw new TypeError('error')
     }
@@ -139,7 +139,7 @@
 
       <div class="sm-12 md-4 col sidebar">
   <div class="paper info-container">
-    <img src="https://capfour.github.io//images/avatar.png?v=1626925384276" class="no-responsive avatar">
+    <img src="https://capfour.github.io//images/avatar.png?v=1627376594777" class="no-responsive avatar">
     <div class="text-muted">FEfour的笔记</div>
     <div class="social-container">
       

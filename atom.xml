@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://capfour.github.io/</id>
     <title>FEfour的笔记</title>
-    <updated>2021-07-22T03:43:10.332Z</updated>
+    <updated>2021-07-27T09:03:17.656Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://capfour.github.io/"/>
     <link rel="self" href="https://capfour.github.io/atom.xml"/>
@@ -50,8 +50,7 @@
 </ul>
 <h3 id="vue"><strong>Vue</strong></h3>
 <ul>
-<li>
-<p>功能</p>
+<li>功能
 <ul>
 <li>负责接受初始化的参数（选项）</li>
 <li>负责把data中的属性注入到Vue实例，转换成getter/setter</li>
@@ -59,91 +58,78 @@
 <li>负责调用compiler解析指令/插值表达式</li>
 </ul>
 </li>
-<li>
-<p>结构<br>
-<img src="https://capfour.github.io//post-images/1625813961500.jpg" alt="" loading="lazy"></p>
+<li>结构<br>
+<img src="https://capfour.github.io//post-images/1625813961500.jpg" alt="" loading="lazy"></li>
+<li>代码<pre><code class="language-js"></code></pre>
 </li>
-<li>
-<p>代码</p>
-<pre><code>  class Vue {
-      constructor (options) {
-          // 1.保存选项的数据
-          this.$options = options | | {}
-          this.$data = options.data | | {}
-          const el = options.el
-          this.$el = typeof options.el === 'string' ? document.querySelector(el): el 
-          //2. 负责把data 注入到 Vue实例
-          this._proxyData(this.$data)
-      }
-
-      _proxyData (data){
-          //遍历data 的所有属性
-          object.defineproperty(this, key, {
-              get(){
-                  return data[key]
-              },
-              set(newValue){
-                  if(data[key] === newValue) return;
-                  data[key] = newValue
-              }
-          })
-      }
-  }
+</ul>
+<p>class Vue {<br>
+constructor (options) {<br>
+// 1.保存选项的数据<br>
+this.<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>o</mi><mi>p</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>s</mi><mo>=</mo><mi>o</mi><mi>p</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi mathvariant="normal">∣</mi><mi mathvariant="normal">∣</mi><mrow></mrow><mi>t</mi><mi>h</mi><mi>i</mi><mi>s</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">options = options | | {}
+        this.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord">∣</span><span class="mord">∣</span><span class="mord"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord">.</span></span></span></span>data = options.data | | {}<br>
+const el = options.el<br>
+this.<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>e</mi><mi>l</mi><mo>=</mo><mi>t</mi><mi>y</mi><mi>p</mi><mi>e</mi><mi>o</mi><mi>f</mi><mi>o</mi><mi>p</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi mathvariant="normal">.</mi><mi>e</mi><mi>l</mi><mo>=</mo><mo>=</mo><msup><mo>=</mo><mo mathvariant="normal">′</mo></msup><mi>s</mi><mi>t</mi><mi>r</mi><mi>i</mi><mi>n</mi><msup><mi>g</mi><mo mathvariant="normal">′</mo></msup><mo>?</mo><mi>d</mi><mi>o</mi><mi>c</mi><mi>u</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi mathvariant="normal">.</mi><mi>q</mi><mi>u</mi><mi>e</mi><mi>r</mi><mi>y</mi><mi>S</mi><mi>e</mi><mi>l</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>o</mi><mi>r</mi><mo>(</mo><mi>e</mi><mi>l</mi><mo>)</mo><mo>:</mo><mi>e</mi><mi>l</mi><mi mathvariant="normal">/</mi><mi mathvariant="normal">/</mi><mn>2.</mn><mi mathvariant="normal">负</mi><mi mathvariant="normal">责</mi><mi mathvariant="normal">把</mi><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi><mi mathvariant="normal">注</mi><mi mathvariant="normal">入</mi><mi mathvariant="normal">到</mi><mi>V</mi><mi>u</mi><mi>e</mi><mi mathvariant="normal">实</mi><mi mathvariant="normal">例</mi><mi>t</mi><mi>h</mi><mi>i</mi><mi>s</mi><msub><mi mathvariant="normal">.</mi><mi>p</mi></msub><mi>r</mi><mi>o</mi><mi>x</mi><mi>y</mi><mi>D</mi><mi>a</mi><mi>t</mi><mi>a</mi><mo>(</mo><mi>t</mi><mi>h</mi><mi>i</mi><mi>s</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">el = typeof options.el === &#x27;string&#x27; ? document.querySelector(el): el 
+        //2. 负责把data 注入到 Vue实例
+        this._proxyData(this.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.751892em;vertical-align:0em;"></span><span class="mrel"><span class="mrel">=</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.001892em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mclose">?</span><span class="mord mathdefault">d</span><span class="mord mathdefault">o</span><span class="mord mathdefault">c</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord">/</span><span class="mord">/</span><span class="mord">2</span><span class="mord">.</span><span class="mord cjk_fallback">负</span><span class="mord cjk_fallback">责</span><span class="mord cjk_fallback">把</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord cjk_fallback">注</span><span class="mord cjk_fallback">入</span><span class="mord cjk_fallback">到</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span><span class="mord cjk_fallback">实</span><span class="mord cjk_fallback">例</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord"><span class="mord">.</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">x</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mopen">(</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord">.</span></span></span></span>data)<br>
+}</p>
+<pre><code>_proxyData (data){
+    //遍历data 的所有属性
+    object.defineproperty(this, key, {
+        get(){
+            return data[key]
+        },
+        set(newValue){
+            if(data[key] === newValue) return;
+            data[key] = newValue
+        }
+    })
+}
 </code></pre>
-</li>
-</ul>
-<h3 id="observer"><strong>Observer</strong></h3>
-<ul>
-<li>
-<p>功能</p>
-<ul>
-<li>负责把data选项中的属性转换成响应式数据</li>
-<li>data中的某个属性也是对象，把该属性转换成响应式数据</li>
-<li>数据变化发送通知</li>
-</ul>
-</li>
-<li>
-<p>结构<br>
-<img src="https://capfour.github.io//post-images/1625814958011.jpg" alt="" loading="lazy"></p>
-</li>
-<li>
-<p>代码</p>
-<pre><code>  //负责数据劫持,把$data中的成员转换成 getter/setter
-  class Observer {
-      constructor (data) {
-          this.walk(data)
-      }
-      //1. 判断数据是否是对象，如果不是对象就return
-      //2.如果是对象，就遍历对象的所有属性，设置为getter/setter
-      walk（data）{
-          if(!data || typeof data !== 'object') return;
-          object.keys(data).forEach(key =&gt; {
-              this.defineReactive(data, key, data[key])
-          })
-      }
-      //定义响应式成员
-      defineReactive（data, key, val）{
-          const _this = this
-          //如果 val 是对象，继续设置它下面的成员为响应式数据
-          this.walk(val)
-          object.defineProperty(data, key, {
-              configurable: true,
-              enumerable: true,
-              get () {
-                  return val
-              },
-              set (newValue) {
-                  if (newValue === val) return;
-                  //如果newValue是对象，设置newValue的成员为响应式
-                  this.walk(newValue)
-                  val = newValue
-              }
-          })
-      }
-  }
+<p>}</p>
+<pre><code>### **Observer**
+- 功能
+    - 负责把data选项中的属性转换成响应式数据
+    - data中的某个属性也是对象，把该属性转换成响应式数据
+    - 数据变化发送通知
+- 结构
+![](https://capfour.github.io//post-images/1625814958011.jpg)
+- 代码
+```js
+//负责数据劫持,把$data中的成员转换成 getter/setter
+class Observer {
+    constructor (data) {
+        this.walk(data)
+    }
+    //1. 判断数据是否是对象，如果不是对象就return
+    //2.如果是对象，就遍历对象的所有属性，设置为getter/setter
+    walk（data）{
+        if(!data || typeof data !== 'object') return;
+        object.keys(data).forEach(key =&gt; {
+            this.defineReactive(data, key, data[key])
+        })
+    }
+    //定义响应式成员
+    defineReactive（data, key, val）{
+        const _this = this
+        //如果 val 是对象，继续设置它下面的成员为响应式数据
+        this.walk(val)
+        object.defineProperty(data, key, {
+            configurable: true,
+            enumerable: true,
+            get () {
+                return val
+            },
+            set (newValue) {
+                if (newValue === val) return;
+                //如果newValue是对象，设置newValue的成员为响应式
+                this.walk(newValue)
+                val = newValue
+            }
+        })
+    }
+}
 </code></pre>
-</li>
-</ul>
 <h3 id="compiler"><strong>Compiler</strong></h3>
 <ul>
 <li>功能
@@ -157,160 +143,226 @@
 <img src="https://capfour.github.io//post-images/1625820312200.jpg" alt="" loading="lazy"></li>
 </ul>
 <h4 id="compile"><strong>compile</strong></h4>
-<pre><code>    //负责解析指令/插值表达式
-    class Compiler {
-        constructor (vm) {
-            this.vm = vm
-            this.el = vm.$el
-            //编译模板
-            this.compile(this.el)
-        }
+<pre><code class="language-js">//负责解析指令/插值表达式
+class Compiler {
+    constructor (vm) {
+        this.vm = vm
+        this.el = vm.$el
         //编译模板
-        //处理文本节点和元素节点
-        compile（）{
-            const nodes = el.childNodes
-            Array.from(nodes).forEach(node =&gt; {
-                //判断是文本节点还是元素节点
-                if(this.isTextNode){
-                    this.compileText(node)
-                }else if (this.isElementNode(node)){
-                    this.compileElement(node)
-                }
-                if(node.childNodes &amp;&amp; node.childNodes.length) {
-                    this.compile(node)
-                }
-            })
-        }
-
-        //判断是否是文本节点
-        isTextNode ( node ) {
-            return node.nodeType === 3
-        }
-        //判断是否是元素节点
-        isElementNode (node ) {
-            return node.nodeType === 1
-        }
-        //判断是否是以 v- 开头的指令
-        isDirective (attrName){
-            return attrName.startsWith('v-')
-        }
-        //编译文本节点
-        compileText（node）{
-
-        }
-        //编译元素节点
-        compileElement（node）{
-
-        }
+        this.compile(this.el)
     }
+    //编译模板
+    //处理文本节点和元素节点
+    compile（）{
+        const nodes = el.childNodes
+        Array.from(nodes).forEach(node =&gt; {
+            //判断是文本节点还是元素节点
+            if(this.isTextNode){
+                this.compileText(node)
+            }else if (this.isElementNode(node)){
+                this.compileElement(node)
+            }
+            if(node.childNodes &amp;&amp; node.childNodes.length) {
+                this.compile(node)
+            }
+        })
+    }
+
+    //判断是否是文本节点
+    isTextNode ( node ) {
+        return node.nodeType === 3
+    }
+    //判断是否是元素节点
+    isElementNode (node ) {
+        return node.nodeType === 1
+    }
+    //判断是否是以 v- 开头的指令
+    isDirective (attrName){
+        return attrName.startsWith('v-')
+    }
+    //编译文本节点
+    compileText（node）{
+
+    }
+    //编译元素节点
+    compileElement（node）{
+
+    }
+}
 </code></pre>
 <h4 id="compiletext"><strong>compileText()</strong></h4>
 <ul>
-<li>
-<p>负责编译插值表达式</p>
-<pre><code>  //编译文本节点
-  compileText (node) {
-      const reg = /\{\{(.+)\}\}/
-      //获取文本节点内容
-      const value = node.textContent
-      if(reg.test(value)) {
-          //插值表达式中的值就是我们要的属性名称
-          const key = RegExp.$1.trim()
-          //把插值表达式替换成具体的值
-          node.textContent = value.replace(reg, this.vm[key])
-      }
-  }
-</code></pre>
-</li>
+<li>负责编译插值表达式</li>
 </ul>
+<pre><code class="language-js">    //编译文本节点
+    compileText (node) {
+        const reg = /\{\{(.+)\}\}/
+        //获取文本节点内容
+        const value = node.textContent
+        if(reg.test(value)) {
+            //插值表达式中的值就是我们要的属性名称
+            const key = RegExp.$1.trim()
+            //把插值表达式替换成具体的值
+            node.textContent = value.replace(reg, this.vm[key])
+        }
+    }
+</code></pre>
 <h4 id="compileelement"><strong>compileElement()</strong></h4>
 <ul>
-<li>
-<p>负责编译元素的指令</p>
-</li>
-<li>
-<p>处理v-text 的首次渲染</p>
-</li>
-<li>
-<p>处理v-model的首次渲染</p>
-<pre><code>  //编译属性节点
-  compileElement (node) {
-      //遍历元素节点中的所有属性，找到指令
-      Array.from(node.attrbutes).forEach(attr =&gt; {
-          let attrName = attr.name
-          //判断当前的属性名称是否是指令
-          if(this.isDirective(attrName)) {
-              //attrName 的形式 v-text v-model
-              //截取属性的名称，获取 text model
-              atttrName = attrName.substr(2)
-              //获取属性的名称，属性的名称就是我们数据对象那个的属性 v-text = &quot;name&quot;,获取的是name
-              const key = attr.value
-              //处理不同的指令
-              this.update(node, key, attrName)
-          }
-      })
-  }
-
-  //负责更新DOM
-  //创建Watcher
-  update(node, key, dir){
-      // node 节点，key 数据的属性名称， dir 指令的后半部分
-      const updaterFn = this[dir + 'updater']
-      updaterFn &amp;&amp; updaterFn(node, this.vm [key])
-  }
-
-  //v-text 指令的更新办法
-  textUpdater(node, value) {
-      node.textContent = value
-  }
-
-  //v-model 指令的更新方法
-  modelUpdater (node, value){
-      node.value = value
-  }
-</code></pre>
-</li>
+<li>负责编译元素的指令</li>
+<li>处理v-text 的首次渲染</li>
+<li>处理v-model的首次渲染</li>
 </ul>
+<pre><code class="language-js">//编译属性节点
+compileElement (node) {
+    //遍历元素节点中的所有属性，找到指令
+    Array.from(node.attrbutes).forEach(attr =&gt; {
+        let attrName = attr.name
+        //判断当前的属性名称是否是指令
+        if(this.isDirective(attrName)) {
+            //attrName 的形式 v-text v-model
+            //截取属性的名称，获取 text model
+            atttrName = attrName.substr(2)
+            //获取属性的名称，属性的名称就是我们数据对象那个的属性 v-text = &quot;name&quot;,获取的是name
+            const key = attr.value
+            //处理不同的指令
+            this.update(node, key, attrName)
+        }
+    })
+}
+
+//负责更新DOM
+//创建Watcher
+update(node, key, dir){
+    // node 节点，key 数据的属性名称， dir 指令的后半部分
+    const updaterFn = this[dir + 'updater']
+    updaterFn &amp;&amp; updaterFn(node, this.vm [key])
+}
+
+//v-text 指令的更新办法
+textUpdater(node, value) {
+    node.textContent = value
+}
+
+//v-model 指令的更新方法
+modelUpdater (node, value){
+    node.value = value
+}
+</code></pre>
 <h4 id="depdependency"><strong>Dep(Dependency)</strong></h4>
 <figure data-type="image" tabindex="1"><img src="https://capfour.github.io//post-images/1626329292374.png" alt="" loading="lazy"></figure>
 <ul>
-<li>
-<p>功能</p>
+<li>功能
 <ul>
 <li>收集依赖，添加观察者（watcher）</li>
 <li>通知所有观察者</li>
 </ul>
 </li>
-<li>
-<p>结构<br>
-<img src="https://capfour.github.io//post-images/1626329374340.png" alt="" loading="lazy"></p>
-</li>
-<li>
-<p>代码</p>
-<pre><code>  class Dep {
-      constructor () {
-          //存储所有的观察者
-          this.subs = []
-      }
-      //添加观察者
-      addsub (sub){
-          if(sub &amp;&amp; sub.update){
-              this.subs.push(sub)
-          }
-      }
-      //通知所有观察者
-      notify (){
-          this.subs.forEach(sub=&gt;{
-              sub.update()
-          })
-      }
-  }
-</code></pre>
-</li>
-<li>
-<p>在compiler.js中收集依赖，发送通知</p>
-</li>
+<li>结构<br>
+<img src="https://capfour.github.io//post-images/1626329374340.png" alt="" loading="lazy"></li>
+<li>代码</li>
 </ul>
+<pre><code class="language-js">    class Dep {
+        constructor () {
+            //存储所有的观察者
+            this.subs = []
+        }
+        //添加观察者
+        addsub (sub){
+            if(sub &amp;&amp; sub.update){
+                this.subs.push(sub)
+            }
+        }
+        //通知所有观察者
+        notify (){
+            this.subs.forEach(sub=&gt;{
+                sub.update()
+            })
+        }
+    }
+</code></pre>
+<ul>
+<li>在compiler.js中收集依赖，发送通知</li>
+</ul>
+<pre><code class="language-js">//在defineReactive中
+//创建dep对象收集依赖
+const dep = new Dep()
+
+//getter中
+//get的过程中收集依赖
+Dep.tatget &amp;&amp; dep.addSub(Dep.target)
+
+//setter中
+//当数据变化之后，发送通知
+dep.notify()
+</code></pre>
+<h4 id="watcher"><strong>Watcher</strong></h4>
+<figure data-type="image" tabindex="2"><img src="https://capfour.github.io//post-images/1626933769169.png" alt="" loading="lazy"></figure>
+<ul>
+<li>功能
+<ul>
+<li>当数据变化触发依赖，dep通知所有的Watcher实例更新视图</li>
+<li>自身实例化的时候往dep对象中添加自己</li>
+</ul>
+</li>
+<li>结构<br>
+<img src="https://capfour.github.io//post-images/1626933919252.png" alt="" loading="lazy"></li>
+<li>代码</li>
+</ul>
+<pre><code class="language-js">class Watcher {
+    constructor (vm,key,cb){
+        this.vm = vm
+        //data中的属性名称
+        this.key = key
+        //当数据变化的时候，调用cb更新视图
+        this.cb = cb
+        //在Dep的静态属性上记录当前watcher对象，当访问数据的时候把watcher添加到dep的subs中
+        Dep.target = this
+        //触发一次getter，让dep为当前key记录watcher
+        this.oldvalue = null
+        //清空target
+        Dep.target = null
+    }
+
+    update(){
+        const newvalue = this.vm[this.key]
+        if(this.oldvalue === newvalue){
+            return
+        }
+        this.cb(newvalue)
+    }
+}
+</code></pre>
+<ul>
+<li>在compiler.js中为每一个指令/插值表达式创建watcher对象，监视数据的变化</li>
+</ul>
+<pre><code class="language-js">//因为在textUpdater中要使用this
+updaterFn &amp;&amp; updaterFn.call(this,node,this.vm[key],key)
+
+//v-text指令的更新方法
+textUpdater (node,value,key){
+    node.textContent = value
+    //每一个指令中创建一个 watcher，观察数据的变化
+    new Watcher(this.vm,key,value =&gt; {
+        node.textContent = value
+    })
+}
+</code></pre>
+<h4 id="视图变化更新数据"><strong>视图变化更新数据</strong></h4>
+<pre><code class="language-js">//v-model 指令的更新方法
+modelUpdater (node,value,key) {
+    node.value = value
+    //每一个指令中创建一个watcher，观察数据的变化
+    new Watcher(this.vm,key,value =&gt; {
+        node.value = value
+    })
+    //监听视图的变化
+    node.addEventLinstener('input', ()=&gt;{
+        this.vm[key] = node.value
+    })
+}
+</code></pre>
+<h4 id="总结"><strong>总结</strong></h4>
 ]]></content>
     </entry>
     <entry>
@@ -357,81 +409,71 @@
 <h3 id="数据响应式的核心原理"><strong>数据响应式的核心原理</strong></h3>
 <h3 id="vue-2x">Vue 2.x</h3>
 <ul>
-<li>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">MDN - Object.defineProperty</a></p>
-</li>
-<li>
-<p>浏览器兼容IE8以上（不兼容IE8）</p>
-<pre><code>  // 模拟 Vue 中的 data 选项
-  let data = {
-      msg: 'hello'
-  }
-
-  // 模拟  Vue 的实例
-  let vm = { }
-
-  //数据劫持：当访问或者设置vm中的成员的时候，做一些干预操作
-  object.defineProperty(vm, 'msg', {
-      // 可枚举（可遍历）
-      enumerable：true，
-      // 可配置（可以使用delete删除，可以通过defineProperty重新定义）
-      configurable: true,
-      // 当获取值的时候执行
-      get(){
-          ocnsole.log('get',data.msg)
-      },
-      // 当设置值的时候执行
-      set(newValue){
-          console.log('set',newValue)
-          if(newValue === data.msg) return;
-          data.msg = newValue
-          // 数据更改，更新 DOM 的值
-          document.querySelector('#app').textContent = data.msg
-      }
-  })
-
-  //测试
-  vm.msg = 'Hello world'
-  console.log(vm.msg)
-</code></pre>
-</li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">MDN - Object.defineProperty</a></li>
+<li>浏览器兼容IE8以上（不兼容IE8）</li>
 </ul>
+<pre><code class="language-js">// 模拟 Vue 中的 data 选项
+let data = {
+    msg: 'hello'
+}
+
+// 模拟  Vue 的实例
+let vm = { }
+
+//数据劫持：当访问或者设置vm中的成员的时候，做一些干预操作
+object.defineProperty(vm, 'msg', {
+    // 可枚举（可遍历）
+    enumerable：true，
+    // 可配置（可以使用delete删除，可以通过defineProperty重新定义）
+    configurable: true,
+    // 当获取值的时候执行
+    get(){
+        ocnsole.log('get',data.msg)
+    },
+    // 当设置值的时候执行
+    set(newValue){
+        console.log('set',newValue)
+        if(newValue === data.msg) return;
+        data.msg = newValue
+        // 数据更改，更新 DOM 的值
+        document.querySelector('#app').textContent = data.msg
+    }
+})
+
+//测试
+vm.msg = 'Hello world'
+console.log(vm.msg)
+</code></pre>
 <h3 id="vue-3x">Vue 3.x</h3>
 <ul>
-<li>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy">MDN - Proxy</a></p>
-</li>
-<li>
-<p>直接监听对象，而非属性</p>
-</li>
-<li>
-<p>ES6中新增，IE不支持，性能由浏览器优化</p>
-<pre><code> // 模拟 Vue 中的data选项
- let data = {
-     msg: 'hello',
-     count: 0
- }
- // 模拟 Vue 实例
- let vm = new Proxy( data, {
-     //当访问 vm 成员会执行
-     get (target, key) {
-         console.log('get, key: ', key, target[key])
-         return target[key]
-     },
-     //当设置 vm 的成员会执行
-     set (target, key, newValue){
-         console.log('set,key: ', key, newValue)
-         if(target[key] === newValue) return;
-         target[key] = newValue
-         document.querySelector('#app').textContent = target[key]
-     }
- })
- //测试
- vm.msg = 'hello World'
- console.log(vm.msg)
-</code></pre>
-</li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy">MDN - Proxy</a></li>
+<li>直接监听对象，而非属性</li>
+<li>ES6中新增，IE不支持，性能由浏览器优化</li>
 </ul>
+<pre><code class="language-js">// 模拟 Vue 中的data选项
+let data = {
+    msg: 'hello',
+    count: 0
+}
+// 模拟 Vue 实例
+let vm = new Proxy( data, {
+    //当访问 vm 成员会执行
+    get (target, key) {
+        console.log('get, key: ', key, target[key])
+        return target[key]
+    },
+    //当设置 vm 的成员会执行
+    set (target, key, newValue){
+        console.log('set,key: ', key, newValue)
+        if(target[key] === newValue) return;
+        target[key] = newValue
+        document.querySelector('#app').textContent = target[key]
+    }
+})
+//测试
+vm.msg = 'hello World'
+console.log(vm.msg)
+</code></pre>
 <h3 id="发布订阅者模式和观察者模式"><strong>发布订阅者模式和观察者模式</strong></h3>
 <h4 id="发布订阅模式"><strong>发布/订阅模式</strong></h4>
 <ul>
@@ -446,113 +488,109 @@
 </li>
 <li>
 <p>vue 兄弟组件通信</p>
-<pre><code>  // eventBus.js 
-  // 事件中心 
-  let eventHub = new Vue() 
-
-  // ComponentA.vue 
-  // 发布者 
-
-  addTodo: function () {
-      // 发布消息(事件) 
-      eventHub.$emit('add-todo', { text: this.newTodoText })
-      this.newTodoText = ' ' 
-  }
-
-  // ComponentB.vue 
-  // 订阅者 
-
-  created: function () {
-      // 订阅消息(事件)
-      eventHub.$on('add-todo', this.addTodo) 
-  }
-</code></pre>
-</li>
-<li>
-<p>自定义事件实现</p>
-<pre><code>  class EventEmiter {
-      constructor() {
-          this.events = {}
-      }
-      emit(event, ...args) {
-          this.events[event].forEach(fn =&gt; {
-              fn.apply(this, args)
-          })
-      }
-      on(event, fn) {
-          if (this.events[event]) {
-              this.events[event].push(fn)
-          } else {
-              this.events[event] = [fn]
-          }
-      }
-      remove(event) {
-          delete this.events[event]
-      }
-  }
-
-  const eventHub = new EventEmiter()
-
-  eventHub.on('test', data =&gt; {
-      console.log(data)
-  })
-
-  eventHub.emit('test', 1)
-</code></pre>
 </li>
 </ul>
+<pre><code class="language-js">// eventBus.js 
+// 事件中心 
+let eventHub = new Vue() 
+
+// ComponentA.vue 
+// 发布者 
+
+addTodo: function () {
+    // 发布消息(事件) 
+    eventHub.$emit('add-todo', { text: this.newTodoText })
+    this.newTodoText = ' ' 
+}
+
+// ComponentB.vue 
+// 订阅者 
+
+created: function () {
+    // 订阅消息(事件)
+    eventHub.$on('add-todo', this.addTodo) 
+}
+</code></pre>
+<ul>
+<li>自定义事件实现</li>
+</ul>
+<pre><code class="language-js">class EventEmiter {
+    constructor() {
+        this.events = {}
+    }
+    emit(event, ...args) {
+        this.events[event].forEach(fn =&gt; {
+            fn.apply(this, args)
+        })
+    }
+    on(event, fn) {
+        if (this.events[event]) {
+            this.events[event].push(fn)
+        } else {
+            this.events[event] = [fn]
+        }
+    }
+    remove(event) {
+        delete this.events[event]
+    }
+}
+
+const eventHub = new EventEmiter()
+
+eventHub.on('test', data =&gt; {
+    console.log(data)
+})
+
+eventHub.emit('test', 1)
+</code></pre>
 <h4 id="观察者模式"><strong>观察者模式</strong></h4>
 <ul>
-<li>
-<p>观察者（订阅者）-- Watcher</p>
+<li>观察者（订阅者）-- Watcher
 <ul>
 <li>update(): 当事件发生时，具体要做的事</li>
 </ul>
 </li>
-<li>
-<p>目标（发布者） -- Dep</p>
+<li>目标（发布者） -- Dep
 <ul>
 <li>subs 数组：存储所有的观察者</li>
 <li>addSub() ：添加观察者</li>
 <li>notufy() : 当事件发生，调用所有的观察者的update() 方法</li>
 </ul>
 </li>
-<li>
-<p>没有事件中心</p>
-<pre><code>  // 目标（发布者）
-  // Dependency
-  calss Dep {
-      constructor(){
-          // 存储所有的观察者
-          this.subs = []
-      }
-      // 添加观察者
-      addSub(sub){
-          if(sub&amp;&amp;sub.update) {
-              this.subs.push(sub)
-          }
-      }
-      // 通知所有的观察者
-      notify(){
-          this.subs.forEach(sub=&gt;{
-              sub.update()
-          })
-      }
-  }
-  // 观察者（订阅者）
-  class watcher {
-      update(){
-          console.log('update')
-      }
-  }
-  // 测试
-  let dep = new Dep()
-  let watcher = new Watcher()
-  dep.addSub(watcher)
-  dep.notify()
-</code></pre>
-</li>
+<li>没有事件中心</li>
 </ul>
+<pre><code class="language-js">// 目标（发布者）
+// Dependency
+calss Dep {
+    constructor(){
+        // 存储所有的观察者
+        this.subs = []
+    }
+    // 添加观察者
+    addSub(sub){
+        if(sub&amp;&amp;sub.update) {
+            this.subs.push(sub)
+        }
+    }
+    // 通知所有的观察者
+    notify(){
+        this.subs.forEach(sub=&gt;{
+            sub.update()
+        })
+    }
+}
+// 观察者（订阅者）
+class watcher {
+    update(){
+        console.log('update')
+    }
+}
+// 测试
+let dep = new Dep()
+let watcher = new Watcher()
+dep.addSub(watcher)
+dep.notify()
+</code></pre>
 <h4 id="总结"><strong>总结</strong></h4>
 <ul>
 <li><strong>观察者模式</strong>是由具体目标调度，比如当事件触发，Dep就会去调用观察者的方法，所以观察者模式的订阅者与发布者之间是存在依赖的。</li>
@@ -579,7 +617,7 @@
 2、自定义一个全局方法可以在Function.prototype上定义一个方法
 </code></pre>
 <h3 id="2-call">2、<strong>call</strong></h3>
-<pre><code>Function.prototype.myCall = function (context) {
+<pre><code class="language-js">Function.prototype.myCall = function (context) {
     //调用对象校验
     if (typeof this !== 'function') {
         console.log(&quot;type error&quot;);
@@ -597,13 +635,13 @@
 }
 </code></pre>
 <h3 id="3-apply">3、 <strong>apply</strong></h3>
-<pre><code>Function.prototype.myApply = function (context) {
-     //调用对象校验
+<pre><code class="language-js">Function.prototype.myApply = function (context) {
+        //调用对象校验
     if(typeof this !== 'function') {
         throw new TypeError('error')
     }
     let result = null
-   //this指向默认window
+    //this指向默认window
     context = context || window
     // 把当前调用的函数赋值给传入对象的
     // context.fn 可以理解为： context.prototype.
@@ -616,7 +654,7 @@
 }
 </code></pre>
 <h3 id="4-bind">4、<strong>bind</strong></h3>
-<pre><code>Function.prototype.myBind = function(context) {
+<pre><code class="language-js">Function.prototype.myBind = function(context) {
     if (typeof this !== 'function') {
         throw new TypeError('error')
     }
