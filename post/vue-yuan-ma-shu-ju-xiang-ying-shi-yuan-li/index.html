@@ -1,70 +1,94 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
-
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>vue源码(一)-数据响应式原理 | FEfour的笔记</title>
-<meta name="description" content="FEfour的笔记">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1627378228636">
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1627378604669">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://capfour.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="vue源码(一)-数据响应式原理 | FEfour的笔记 - Atom Feed" href="https://capfour.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <meta name="description" content="学习目的
+
+模拟一个最小版本的vue
+实际项目中出问题的原理层面的解决
+
+给vue实例新增一个成员是否是响应式的？
+给属性重新赋值称对象，是否是响应式的?
 
 
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
+准备工作
 
+数据驱动
+响应式核心原理
+发布订阅模式和观察者模式
+
+数据驱动
+
+..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
   <body>
-  
-    <nav class="navbar border fixed split-nav">
-  <div class="nav-brand">
-    <h3><a href="https://capfour.github.io/">FEfour的笔记</a></h3>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://capfour.github.io/">
+  <img class="avatar" src="https://capfour.github.io//images/avatar.png?v=1627378604669" alt="">
+  </a>
+  <h1 class="site-title">
+    FEfour的笔记
+  </h1>
+  <p class="site-description">
+    FEfour的笔记
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
   </div>
-  <div class="collapsible">
-    <input id="collapsible1" type="checkbox" name="collapsible1">
-    <button>
-      <label for="collapsible1">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
-      </label>
-    </button>
-    <div class="collapsible-body">
-      <ul class="inline">
-        
-          <li>
-            
-              <a href="/" class="menu">
-                首页
-              </a>
-            
-          </li>
-        
-      </ul>
-    </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
   </div>
-</nav>
+</div>
 
-    <div id="top" class="row site">
-      <div class="sm-12 md-8 col">
-        <div class="paper">
-          <article class="article">
-            <h1>vue源码(一)-数据响应式原理</h1>
-            <p class="article-meta">
-              2021-07-07
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              vue源码(一)-数据响应式原理
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-07-07
+              </span>
+              <span>
+                5 min read
+              </span>
               
-            </p>
+            </div>
             
-            <div class="post-content">
-              <h3 id="学习目的"><strong>学习目的</strong></h3>
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h3 id="学习目的"><strong>学习目的</strong></h3>
 <ul>
 <li>模拟一个最小版本的vue</li>
 <li>实际项目中出问题的原理层面的解决
@@ -291,106 +315,99 @@ dep.notify()
 </ul>
 <figure data-type="image" tabindex="1"><img src="https://capfour.github.io//post-images/1625651644043.jpg" alt="" loading="lazy"></figure>
 
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E7%9A%84"><strong>学习目的</strong></a></li>
+<li><a href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><strong>准备工作</strong></a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8"><strong>数据驱动</strong></a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%93%8D%E5%BA%94%E5%BC%8F%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86"><strong>数据响应式的核心原理</strong></a></li>
+<li><a href="#vue-2x">Vue 2.x</a></li>
+<li><a href="#vue-3x">Vue 3.x</a></li>
+<li><a href="#%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E8%80%85%E6%A8%A1%E5%BC%8F%E5%92%8C%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F"><strong>发布订阅者模式和观察者模式</strong></a>
+<ul>
+<li><a href="#%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F"><strong>发布/订阅模式</strong></a></li>
+<li><a href="#%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F"><strong>观察者模式</strong></a></li>
+<li><a href="#%E6%80%BB%E7%BB%93"><strong>总结</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
             </div>
           </article>
         </div>
-        <div class="paper" data-aos="fade-in">
-          
-            <div class="next-post">
-              <div class="next">
-                下一篇
-              </div>
-              <a href="https://capfour.github.io/post/shou-dong-shi-xian-call-apply-bind/">
-                <h3 class="post-title">
-                  手动实现call(), apply(), bind()
-                </h3>
-              </a>
-            </div>
-          
-        </div>
-        
-      </div>
 
-      <div class="sm-12 md-4 col sidebar">
-  <div class="paper info-container">
-    <img src="https://capfour.github.io//images/avatar.png?v=1627378228636" class="no-responsive avatar">
-    <div class="text-muted">FEfour的笔记</div>
-    <div class="social-container">
-      
         
-      
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://capfour.github.io/post/shou-dong-shi-xian-call-apply-bind/">
+              <h3 class="post-title">
+                手动实现call(), apply(), bind()
+              </h3>
+            </a>
+          </div>
         
-      
+
         
-      
-        
-      
-        
-      
-    </div>
-  </div>
-  <div class="paper">
-    <div class="sidebar-title">
-      最新文章
-    </div>
-    <div class="row">
-      <ul>
-        
-          
-            <li>
-              <a href="https://capfour.github.io/post/vue3-kuai-su-shang-shou/">Vue3快速上手</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://capfour.github.io/post/vue-yuan-ma-vue-xiang-ying-shi-yuan-li-mo-ni/">Vue源码(二)-Vue响应式原理模拟</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://capfour.github.io/post/vue-yuan-ma-shu-ju-xiang-ying-shi-yuan-li/">vue源码(一)-数据响应式原理</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://capfour.github.io/post/shou-dong-shi-xian-call-apply-bind/">手动实现call(), apply(), bind()</a>
-            </li>
-          
-        
-      </ul>
-    </div>
-  </div>
-  <div class="paper">
-    <div class="sidebar-title">
-      标签列表
-    </div>
-    <div class="row">
-      
-    </div>
-  </div>
-  <div class="paper">
-    无限进步 | <a class="rss" href="https://capfour.github.io//atom.xml" target="_blank">RSS</a>
-  </div>
+
+        <div class="site-footer">
+  无限进步
+  <a class="rss" href="https://capfour.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
 </div>
 
-
+      </div>
     </div>
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
 
-<script type="application/javascript">
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
 
-AOS.init();
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
 
-hljs.initHighlightingOnLoad()
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
 
-</script>
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
 
-
-
-
+    </script>
   </body>
 </html>

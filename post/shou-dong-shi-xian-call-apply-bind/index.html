@@ -1,70 +1,79 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
-
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>手动实现call(), apply(), bind() | FEfour的笔记</title>
-<meta name="description" content="FEfour的笔记">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1627378228636">
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1627378604669">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://capfour.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="手动实现call(), apply(), bind() | FEfour的笔记 - Atom Feed" href="https://capfour.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
-
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
-
+    <meta name="description" content="一、call、apply、bind 其作用都是改变函数运行时this的指向
+1, call 的参数是直接放进去的，用逗号分隔   
+2, apply 的所有参数都必须放在一个数组里面传进去  
+3, bind 除了返回是函数以外，它的参数和..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
   <body>
-  
-    <nav class="navbar border fixed split-nav">
-  <div class="nav-brand">
-    <h3><a href="https://capfour.github.io/">FEfour的笔记</a></h3>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://capfour.github.io/">
+  <img class="avatar" src="https://capfour.github.io//images/avatar.png?v=1627378604669" alt="">
+  </a>
+  <h1 class="site-title">
+    FEfour的笔记
+  </h1>
+  <p class="site-description">
+    FEfour的笔记
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
   </div>
-  <div class="collapsible">
-    <input id="collapsible1" type="checkbox" name="collapsible1">
-    <button>
-      <label for="collapsible1">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
-      </label>
-    </button>
-    <div class="collapsible-body">
-      <ul class="inline">
-        
-          <li>
-            
-              <a href="/" class="menu">
-                首页
-              </a>
-            
-          </li>
-        
-      </ul>
-    </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
   </div>
-</nav>
+</div>
 
-    <div id="top" class="row site">
-      <div class="sm-12 md-8 col">
-        <div class="paper">
-          <article class="article">
-            <h1>手动实现call(), apply(), bind()</h1>
-            <p class="article-meta">
-              2021-07-07
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              手动实现call(), apply(), bind()
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-07-07
+              </span>
+              <span>
+                2 min read
+              </span>
               
-            </p>
+            </div>
             
-            <div class="post-content">
-              <h2 id="一-call-apply-bind-其作用都是改变函数运行时this的指向">一、call、apply、bind 其作用都是改变函数运行时this的指向</h2>
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="一-call-apply-bind-其作用都是改变函数运行时this的指向">一、call、apply、bind 其作用都是改变函数运行时this的指向</h2>
 <pre><code>1, call 的参数是直接放进去的，用逗号分隔   
 2, apply 的所有参数都必须放在一个数组里面传进去  
 3, bind 除了返回是函数以外，它的参数和 call 一样；与上面两者不同的是bind不会立即执行函数，而call和apply会执行函数
@@ -128,95 +137,83 @@
 <pre><code>bind和call与apply的区别是不会立即调用函数，常用于改变回调函数的参数，bind的参数传递方式和call一样
 </code></pre>
 
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%B8%80-call-apply-bind-%E5%85%B6%E4%BD%9C%E7%94%A8%E9%83%BD%E6%98%AF%E6%94%B9%E5%8F%98%E5%87%BD%E6%95%B0%E8%BF%90%E8%A1%8C%E6%97%B6this%E7%9A%84%E6%8C%87%E5%90%91">一、call、apply、bind 其作用都是改变函数运行时this的指向</a></li>
+<li><a href="#%E4%BA%8C-%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E4%B8%89%E4%B8%AA%E5%87%BD%E6%95%B0">二、手动实现三个函数</a>
+<ul>
+<li><a href="#1-tips">1、<strong>tips</strong></a></li>
+<li><a href="#2-call">2、<strong>call</strong></a></li>
+<li><a href="#3-apply">3、 <strong>apply</strong></a></li>
+<li><a href="#4-bind">4、<strong>bind</strong></a></li>
+<li><a href="#%E4%B8%89-%E6%80%BB%E7%BB%93">三, <strong>总结</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
             </div>
           </article>
         </div>
-        <div class="paper" data-aos="fade-in">
-          
-        </div>
-        
-      </div>
 
-      <div class="sm-12 md-4 col sidebar">
-  <div class="paper info-container">
-    <img src="https://capfour.github.io//images/avatar.png?v=1627378228636" class="no-responsive avatar">
-    <div class="text-muted">FEfour的笔记</div>
-    <div class="social-container">
-      
         
-      
+
         
-      
-        
-      
-        
-      
-        
-      
-    </div>
-  </div>
-  <div class="paper">
-    <div class="sidebar-title">
-      最新文章
-    </div>
-    <div class="row">
-      <ul>
-        
-          
-            <li>
-              <a href="https://capfour.github.io/post/vue3-kuai-su-shang-shou/">Vue3快速上手</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://capfour.github.io/post/vue-yuan-ma-vue-xiang-ying-shi-yuan-li-mo-ni/">Vue源码(二)-Vue响应式原理模拟</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://capfour.github.io/post/vue-yuan-ma-shu-ju-xiang-ying-shi-yuan-li/">vue源码(一)-数据响应式原理</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://capfour.github.io/post/shou-dong-shi-xian-call-apply-bind/">手动实现call(), apply(), bind()</a>
-            </li>
-          
-        
-      </ul>
-    </div>
-  </div>
-  <div class="paper">
-    <div class="sidebar-title">
-      标签列表
-    </div>
-    <div class="row">
-      
-    </div>
-  </div>
-  <div class="paper">
-    无限进步 | <a class="rss" href="https://capfour.github.io//atom.xml" target="_blank">RSS</a>
-  </div>
+
+        <div class="site-footer">
+  无限进步
+  <a class="rss" href="https://capfour.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
 </div>
 
-
+      </div>
     </div>
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
 
-<script type="application/javascript">
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
 
-AOS.init();
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
 
-hljs.initHighlightingOnLoad()
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
 
-</script>
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
 
-
-
-
+    </script>
   </body>
 </html>

@@ -1,70 +1,81 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
-
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Vue3快速上手 | FEfour的笔记</title>
-<meta name="description" content="FEfour的笔记">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1627378228636">
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1627378604669">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://capfour.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Vue3快速上手 | FEfour的笔记 - Atom Feed" href="https://capfour.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
+    <meta name="description" content="
+1.Vue3简介
 
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
-
+2020年9月18日，Vue.js发布3.0版本，代号：One Piece（海贼王）
+耗时2年多、2600+次提交、30+个RFC、600+次PR、99位贡献者
+github上的tags地址：https://githu..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
   <body>
-  
-    <nav class="navbar border fixed split-nav">
-  <div class="nav-brand">
-    <h3><a href="https://capfour.github.io/">FEfour的笔记</a></h3>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://capfour.github.io/">
+  <img class="avatar" src="https://capfour.github.io//images/avatar.png?v=1627378604669" alt="">
+  </a>
+  <h1 class="site-title">
+    FEfour的笔记
+  </h1>
+  <p class="site-description">
+    FEfour的笔记
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
   </div>
-  <div class="collapsible">
-    <input id="collapsible1" type="checkbox" name="collapsible1">
-    <button>
-      <label for="collapsible1">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
-      </label>
-    </button>
-    <div class="collapsible-body">
-      <ul class="inline">
-        
-          <li>
-            
-              <a href="/" class="menu">
-                首页
-              </a>
-            
-          </li>
-        
-      </ul>
-    </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
   </div>
-</nav>
+</div>
 
-    <div id="top" class="row site">
-      <div class="sm-12 md-8 col">
-        <div class="paper">
-          <article class="article">
-            <h1>Vue3快速上手</h1>
-            <p class="article-meta">
-              2021-07-27
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Vue3快速上手
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-07-27
+              </span>
+              <span>
+                16 min read
+              </span>
               
-            </p>
+            </div>
             
-            <div class="post-content">
-              <img src="https://user-images.githubusercontent.com/499550/93624428-53932780-f9ae-11ea-8d16-af949e16a09f.png" style="width:200px" />
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <img src="https://user-images.githubusercontent.com/499550/93624428-53932780-f9ae-11ea-8d16-af949e16a09f.png" style="width:200px" />
 <h2 id="1vue3简介">1.Vue3简介</h2>
 <ul>
 <li>2020年9月18日，Vue.js发布3.0版本，代号：One Piece（海贼王）</li>
@@ -822,106 +833,151 @@ Vue.directive('focus', {
 </li>
 </ul>
 
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#1vue3%E7%AE%80%E4%BB%8B">1.Vue3简介</a></li>
+<li><a href="#2vue3%E5%B8%A6%E6%9D%A5%E4%BA%86%E4%BB%80%E4%B9%88">2.Vue3带来了什么</a>
+<ul>
+<li><a href="#1%E6%80%A7%E8%83%BD%E7%9A%84%E6%8F%90%E5%8D%87">1.性能的提升</a></li>
+<li><a href="#2%E6%BA%90%E7%A0%81%E7%9A%84%E5%8D%87%E7%BA%A7">2.源码的升级</a></li>
+<li><a href="#3%E6%8B%A5%E6%8A%B1typescript">3.拥抱TypeScript</a></li>
+<li><a href="#4%E6%96%B0%E7%9A%84%E7%89%B9%E6%80%A7">4.新的特性</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%B8%80-%E5%88%9B%E5%BB%BAvue30%E5%B7%A5%E7%A8%8B">一、创建Vue3.0工程</a>
+<ul>
+<li><a href="#1%E4%BD%BF%E7%94%A8-vue-cli-%E5%88%9B%E5%BB%BA">1.使用 vue-cli 创建</a></li>
+<li><a href="#2%E4%BD%BF%E7%94%A8-vite-%E5%88%9B%E5%BB%BA">2.使用 vite 创建</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E5%B8%B8%E7%94%A8-composition-api">二、常用 Composition API</a>
+<ul>
+<li><a href="#1%E6%8B%89%E5%BC%80%E5%BA%8F%E5%B9%95%E7%9A%84setup">1.拉开序幕的setup</a></li>
+<li><a href="#2ref%E5%87%BD%E6%95%B0">2.ref函数</a></li>
+<li><a href="#3reactive%E5%87%BD%E6%95%B0">3.reactive函数</a></li>
+<li><a href="#4vue30%E4%B8%AD%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86">4.Vue3.0中的响应式原理</a>
+<ul>
+<li><a href="#vue2x%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F">vue2.x的响应式</a></li>
+<li><a href="#vue30%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F">Vue3.0的响应式</a></li>
+</ul>
+</li>
+<li><a href="#5reactive%E5%AF%B9%E6%AF%94ref">5.reactive对比ref</a></li>
+<li><a href="#6setup%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%B3%A8%E6%84%8F%E7%82%B9">6.setup的两个注意点</a></li>
+<li><a href="#7%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E4%B8%8E%E7%9B%91%E8%A7%86">7.计算属性与监视</a>
+<ul>
+<li><a href="#1computed%E5%87%BD%E6%95%B0">1.computed函数</a></li>
+<li><a href="#2watch%E5%87%BD%E6%95%B0">2.watch函数</a></li>
+<li><a href="#3watcheffect%E5%87%BD%E6%95%B0">3.watchEffect函数</a></li>
+</ul>
+</li>
+<li><a href="#8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">8.生命周期</a></li>
+<li><a href="#9%E8%87%AA%E5%AE%9A%E4%B9%89hook%E5%87%BD%E6%95%B0">9.自定义hook函数</a></li>
+<li><a href="#10toref">10.toRef</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E5%85%B6%E5%AE%83-composition-api">三、其它 Composition API</a>
+<ul>
+<li><a href="#1shallowreactive-%E4%B8%8E-shallowref">1.shallowReactive 与 shallowRef</a></li>
+<li><a href="#2readonly-%E4%B8%8E-shallowreadonly">2.readonly 与 shallowReadonly</a></li>
+<li><a href="#3toraw-%E4%B8%8E-markraw">3.toRaw 与 markRaw</a></li>
+<li><a href="#4customref">4.customRef</a></li>
+<li><a href="#5provide-%E4%B8%8E-inject">5.provide 与 inject</a></li>
+<li><a href="#6%E5%93%8D%E5%BA%94%E5%BC%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E5%88%A4%E6%96%AD">6.响应式数据的判断</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B-composition-api-%E7%9A%84%E4%BC%98%E5%8A%BF">四、Composition API 的优势</a>
+<ul>
+<li><a href="#1options-api-%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98">1.Options API 存在的问题</a></li>
+<li><a href="#2composition-api-%E7%9A%84%E4%BC%98%E5%8A%BF">2.Composition API 的优势</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%94-%E6%96%B0%E7%9A%84%E7%BB%84%E4%BB%B6">五、新的组件</a>
+<ul>
+<li><a href="#1fragment">1.Fragment</a></li>
+<li><a href="#2teleport">2.Teleport</a></li>
+<li><a href="#3suspense">3.Suspense</a></li>
+</ul>
+</li>
+<li><a href="#%E5%85%AD-%E5%85%B6%E4%BB%96">六、其他</a>
+<ul>
+<li><a href="#1%E5%85%A8%E5%B1%80api%E7%9A%84%E8%BD%AC%E7%A7%BB">1.全局API的转移</a></li>
+<li><a href="#2%E5%85%B6%E4%BB%96%E6%94%B9%E5%8F%98">2.其他改变</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
             </div>
           </article>
         </div>
-        <div class="paper" data-aos="fade-in">
-          
-            <div class="next-post">
-              <div class="next">
-                下一篇
-              </div>
-              <a href="https://capfour.github.io/post/vue-yuan-ma-vue-xiang-ying-shi-yuan-li-mo-ni/">
-                <h3 class="post-title">
-                  Vue源码(二)-Vue响应式原理模拟
-                </h3>
-              </a>
-            </div>
-          
-        </div>
-        
-      </div>
 
-      <div class="sm-12 md-4 col sidebar">
-  <div class="paper info-container">
-    <img src="https://capfour.github.io//images/avatar.png?v=1627378228636" class="no-responsive avatar">
-    <div class="text-muted">FEfour的笔记</div>
-    <div class="social-container">
-      
         
-      
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://capfour.github.io/post/vue-yuan-ma-vue-xiang-ying-shi-yuan-li-mo-ni/">
+              <h3 class="post-title">
+                Vue源码(二)-Vue响应式原理模拟
+              </h3>
+            </a>
+          </div>
         
-      
+
         
-      
-        
-      
-        
-      
-    </div>
-  </div>
-  <div class="paper">
-    <div class="sidebar-title">
-      最新文章
-    </div>
-    <div class="row">
-      <ul>
-        
-          
-            <li>
-              <a href="https://capfour.github.io/post/vue3-kuai-su-shang-shou/">Vue3快速上手</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://capfour.github.io/post/vue-yuan-ma-vue-xiang-ying-shi-yuan-li-mo-ni/">Vue源码(二)-Vue响应式原理模拟</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://capfour.github.io/post/vue-yuan-ma-shu-ju-xiang-ying-shi-yuan-li/">vue源码(一)-数据响应式原理</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://capfour.github.io/post/shou-dong-shi-xian-call-apply-bind/">手动实现call(), apply(), bind()</a>
-            </li>
-          
-        
-      </ul>
-    </div>
-  </div>
-  <div class="paper">
-    <div class="sidebar-title">
-      标签列表
-    </div>
-    <div class="row">
-      
-    </div>
-  </div>
-  <div class="paper">
-    无限进步 | <a class="rss" href="https://capfour.github.io//atom.xml" target="_blank">RSS</a>
-  </div>
+
+        <div class="site-footer">
+  无限进步
+  <a class="rss" href="https://capfour.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
 </div>
 
-
+      </div>
     </div>
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
 
-<script type="application/javascript">
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
 
-AOS.init();
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
 
-hljs.initHighlightingOnLoad()
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
 
-</script>
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
 
-
-
-
+    </script>
   </body>
 </html>
