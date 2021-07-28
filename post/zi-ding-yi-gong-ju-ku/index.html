@@ -1,0 +1,359 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>自定义工具库 | FEfour的笔记</title>
+<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1627439662772">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://capfour.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="自定义工具库 | FEfour的笔记 - Atom Feed" href="https://capfour.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="1. 创建工具包项目
+1.1 安装node
+
+检查是否安装node（node中自带npm）
+
+如果node与npm命令不识别，请自行安装
+
+1.2 创建项目
+# 创建一个空的项目文件夹: yuzhilin-utils
+# 在文件夹下执行命令..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://capfour.github.io/">
+  <img class="avatar" src="https://capfour.github.io//images/avatar.png?v=1627439662772" alt="">
+  </a>
+  <h1 class="site-title">
+    FEfour的笔记
+  </h1>
+  <p class="site-description">
+    FEfour的笔记
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              自定义工具库
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-07-28
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="1-创建工具包项目"><strong>1. 创建工具包项目</strong></h2>
+<h3 id="11-安装node">1.1 安装node</h3>
+<ul>
+<li>检查是否安装node（node中自带npm）<br>
+<img src="https://capfour.github.io//post-images/1627436045461.png" alt="" loading="lazy"></li>
+<li>如果node与npm命令不识别，请自行安装</li>
+</ul>
+<h3 id="12-创建项目">1.2 创建项目</h3>
+<pre><code class="language-bash"># 创建一个空的项目文件夹: yuzhilin-utils
+# 在文件夹下执行命令
+npm init -y
+</code></pre>
+<h3 id="13-下载依赖包">1.3 下载依赖包</h3>
+<pre><code class="language-bash">npm i webpack webpack-cli
+</code></pre>
+<h3 id="14配置webpack">1.4.配置webpack</h3>
+<ul>
+<li><code>webpack.config.js</code></li>
+</ul>
+<pre><code class="language-js">const path = require('path')
+module.exports = {
+  // 模式
+  mode: 'development', // 也可以使用 production
+  // 入口
+  entry: './src/index.js', 
+  // 出口
+  output: {
+    // 打包文件夹
+    path: path.resolve(__dirname, 'dist'),
+    // 打包文件
+    filename: 'yuzhilin-utils.js', 
+    // 向外暴露的对象的名称
+    library: 'yUtils',
+    // 打包生成库可以通过esm/commonjs/reqirejs的语法引入
+    libraryTarget: 'umd', 
+  },
+}
+</code></pre>
+<h3 id="15在入口js中暴露功能">1.5.在入口JS中暴露功能</h3>
+<ul>
+<li><code>src/index.js</code></li>
+</ul>
+<pre><code class="language-js">export function test() {
+  document.write('测试自定义包')
+  console.log('test()')
+}
+</code></pre>
+<h3 id="16配置打包命令">1.6.配置打包命令</h3>
+<ul>
+<li><code>packge.json</code></li>
+</ul>
+<pre><code class="language-json">&quot;scripts&quot;: {
+  &quot;build:watch&quot;: &quot;webpack --watch&quot;
+},
+</code></pre>
+<h3 id="17对项目进行打包">1.7.对项目进行打包</h3>
+<pre><code class="language-bash">npm run build:watch
+</code></pre>
+<h3 id="18测试使用自定义包">1.8.测试使用自定义包</h3>
+<ul>
+<li><code>test/first.html</code></li>
+</ul>
+<pre><code class="language-html">&lt;body&gt;
+  &lt;script src=&quot;../dist/yuzhilin-utils.js&quot;&gt;&lt;/script&gt;
+  &lt;script&gt;
+    yUtils.test()
+  &lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://capfour.github.io//post-images/1627437322386.png" alt="" loading="lazy"></figure>
+<h2 id="2-发布到npm中央仓库"><strong>2. 发布到npm中央仓库</strong></h2>
+<h3 id="21完善-packagejson">2.1.完善 package.json</h3>
+<ul>
+<li>注意：
+<ul>
+<li>name：必须是唯一的名称（npm线上中央仓库没有重复的名称）</li>
+<li>mian：必须指定为打包生成的js文件</li>
+<li>keywords：制定一些方便其他开发人员搜索当前库的关键字</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;utils&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;author&quot;: &quot;yuzhilin&quot;,
+  &quot;description&quot;: &quot;yuzhilin-前端-自定义工具函数库&quot;,
+  &quot;keywords&quot;: [
+    &quot;yuzhilin&quot;,
+    &quot;utils&quot;,
+    &quot;array&quot;,
+    &quot;object&quot;,
+    &quot;function&quot;,
+    &quot;string&quot;,
+    &quot;axios&quot;,
+    &quot;event-bus&quot;,
+    &quot;pub-sub&quot;,
+    &quot;promise&quot;
+  ],
+  &quot;main&quot;: &quot;dist/yuzhilin-utils.js&quot;,
+  &quot;license&quot;: &quot;MIT&quot;,
+  &quot;scripts&quot;: {
+    &quot;build:watch&quot;: &quot;webpack --watch&quot;,
+    &quot;build&quot;: &quot;webpack&quot;
+  },
+  &quot;devDependencies&quot;: {
+    &quot;webpack&quot;: &quot;^5.10.0&quot;,
+    &quot;webpack-cli&quot;: &quot;^4.2.0&quot;
+  }
+}
+</code></pre>
+<h3 id="22npm配置">2.2.npm配置</h3>
+<ul>
+<li>npm配置的中央仓库不能是淘宝镜像</li>
+<li>发布前必须执行: npm config set registry https://registry.npmjs.org/</li>
+<li>不用发布时: npm config set registry http://registry.npm.taobao.org/</li>
+<li>查看配置: npm config list</li>
+</ul>
+<h3 id="23注册npm中央仓库账号">2.3.注册npm中央仓库账号</h3>
+<ul>
+<li>注册地址: https://www.npmjs.com/</li>
+<li>关键信息: 用户名/密码/邮箱(需要验证)<br>
+<img src="https://capfour.github.io//post-images/1627437892691.jpg" alt="" loading="lazy"></li>
+</ul>
+<h3 id="24添加用户">2.4.添加用户</h3>
+<ul>
+<li>执行: npm addUser</li>
+<li>登陆npm仓库</li>
+<li>依次指定用户名/密码/邮箱<br>
+<img src="https://capfour.github.io//post-images/1627438226545.png" alt="" loading="lazy"></li>
+</ul>
+<h3 id="25发布仓库">2.5.发布仓库</h3>
+<ul>
+<li>执行npm publish<br>
+<img src="https://capfour.github.io//post-images/1627438509682.png" alt="" loading="lazy"></li>
+<li>发布失败（可能的两个原因：1、存在其他同名库，2、自己已经发布过同名库），修改一下package.json中的name为一个唯一值，在发布<br>
+<img src="https://capfour.github.io//post-images/1627438733957.png" alt="" loading="lazy"></li>
+</ul>
+<h3 id="26更新代码后发布">2.6.更新代码后发布</h3>
+<ul>
+<li>修改项目库的版本号: package.json 中的version 从1.0.0 改为1.0.1, 注意一定要变大</li>
+<li>修改代码后重新打包: npm run build</li>
+<li>执行发布: npm publish</li>
+</ul>
+<h3 id="27强制删除已发布的库">2.7.强制删除已发布的库</h3>
+<ul>
+<li>执行: npm unpublish --force</li>
+<li>注意: 必须在72小时内, 否则不能再删除</li>
+</ul>
+<h2 id="3使用自定义工具包"><strong>3.使用自定义工具包</strong></h2>
+<h3 id="31下载工具包">3.1.下载工具包</h3>
+<pre><code class="language-bash"># 名称是你前面指定的库的名称
+npm install y-utils2
+</code></pre>
+<h3 id="32网页中引入并使用">3.2.网页中引入并使用</h3>
+<pre><code class="language-html">&lt;script src=&quot;./node_modules/y-utils2/dist/yuzhilin-utils.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  yUtils.test()
+&lt;/script&gt;
+</code></pre>
+<h3 id="33模块化引入并使用">3.3.模块化引入并使用</h3>
+<pre><code class="language-js">// 使用ESM引入
+import {test} from 'a-utils2'
+test()
+
+// 使用commonjs引入
+const {test} = require('a-utils2')
+test()
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#1-%E5%88%9B%E5%BB%BA%E5%B7%A5%E5%85%B7%E5%8C%85%E9%A1%B9%E7%9B%AE"><strong>1. 创建工具包项目</strong></a>
+<ul>
+<li><a href="#11-%E5%AE%89%E8%A3%85node">1.1 安装node</a></li>
+<li><a href="#12-%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE">1.2 创建项目</a></li>
+<li><a href="#13-%E4%B8%8B%E8%BD%BD%E4%BE%9D%E8%B5%96%E5%8C%85">1.3 下载依赖包</a></li>
+<li><a href="#14%E9%85%8D%E7%BD%AEwebpack">1.4.配置webpack</a></li>
+<li><a href="#15%E5%9C%A8%E5%85%A5%E5%8F%A3js%E4%B8%AD%E6%9A%B4%E9%9C%B2%E5%8A%9F%E8%83%BD">1.5.在入口JS中暴露功能</a></li>
+<li><a href="#16%E9%85%8D%E7%BD%AE%E6%89%93%E5%8C%85%E5%91%BD%E4%BB%A4">1.6.配置打包命令</a></li>
+<li><a href="#17%E5%AF%B9%E9%A1%B9%E7%9B%AE%E8%BF%9B%E8%A1%8C%E6%89%93%E5%8C%85">1.7.对项目进行打包</a></li>
+<li><a href="#18%E6%B5%8B%E8%AF%95%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8C%85">1.8.测试使用自定义包</a></li>
+</ul>
+</li>
+<li><a href="#2-%E5%8F%91%E5%B8%83%E5%88%B0npm%E4%B8%AD%E5%A4%AE%E4%BB%93%E5%BA%93"><strong>2. 发布到npm中央仓库</strong></a>
+<ul>
+<li><a href="#21%E5%AE%8C%E5%96%84-packagejson">2.1.完善 package.json</a></li>
+<li><a href="#22npm%E9%85%8D%E7%BD%AE">2.2.npm配置</a></li>
+<li><a href="#23%E6%B3%A8%E5%86%8Cnpm%E4%B8%AD%E5%A4%AE%E4%BB%93%E5%BA%93%E8%B4%A6%E5%8F%B7">2.3.注册npm中央仓库账号</a></li>
+<li><a href="#24%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7">2.4.添加用户</a></li>
+<li><a href="#25%E5%8F%91%E5%B8%83%E4%BB%93%E5%BA%93">2.5.发布仓库</a></li>
+<li><a href="#26%E6%9B%B4%E6%96%B0%E4%BB%A3%E7%A0%81%E5%90%8E%E5%8F%91%E5%B8%83">2.6.更新代码后发布</a></li>
+<li><a href="#27%E5%BC%BA%E5%88%B6%E5%88%A0%E9%99%A4%E5%B7%B2%E5%8F%91%E5%B8%83%E7%9A%84%E5%BA%93">2.7.强制删除已发布的库</a></li>
+</ul>
+</li>
+<li><a href="#3%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B7%A5%E5%85%B7%E5%8C%85"><strong>3.使用自定义工具包</strong></a>
+<ul>
+<li><a href="#31%E4%B8%8B%E8%BD%BD%E5%B7%A5%E5%85%B7%E5%8C%85">3.1.下载工具包</a></li>
+<li><a href="#32%E7%BD%91%E9%A1%B5%E4%B8%AD%E5%BC%95%E5%85%A5%E5%B9%B6%E4%BD%BF%E7%94%A8">3.2.网页中引入并使用</a></li>
+<li><a href="#33%E6%A8%A1%E5%9D%97%E5%8C%96%E5%BC%95%E5%85%A5%E5%B9%B6%E4%BD%BF%E7%94%A8">3.3.模块化引入并使用</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://capfour.github.io/post/vue3-kuai-su-shang-shou/">
+              <h3 class="post-title">
+                Vue3快速上手
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  无限进步
+  <a class="rss" href="https://capfour.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

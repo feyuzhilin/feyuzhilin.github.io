@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://capfour.github.io/</id>
     <title>FEfour的笔记</title>
-    <updated>2021-07-27T10:29:35.666Z</updated>
+    <updated>2021-07-28T02:34:43.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://capfour.github.io/"/>
     <link rel="self" href="https://capfour.github.io/atom.xml"/>
@@ -10,6 +10,182 @@
     <logo>https://capfour.github.io/images/avatar.png</logo>
     <icon>https://capfour.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, FEfour的笔记</rights>
+    <entry>
+        <title type="html"><![CDATA[自定义工具库]]></title>
+        <id>https://capfour.github.io/post/zi-ding-yi-gong-ju-ku/</id>
+        <link href="https://capfour.github.io/post/zi-ding-yi-gong-ju-ku/">
+        </link>
+        <updated>2021-07-28T01:30:08.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="1-创建工具包项目"><strong>1. 创建工具包项目</strong></h2>
+<h3 id="11-安装node">1.1 安装node</h3>
+<ul>
+<li>检查是否安装node（node中自带npm）<br>
+<img src="https://capfour.github.io//post-images/1627436045461.png" alt="" loading="lazy"></li>
+<li>如果node与npm命令不识别，请自行安装</li>
+</ul>
+<h3 id="12-创建项目">1.2 创建项目</h3>
+<pre><code class="language-bash"># 创建一个空的项目文件夹: yuzhilin-utils
+# 在文件夹下执行命令
+npm init -y
+</code></pre>
+<h3 id="13-下载依赖包">1.3 下载依赖包</h3>
+<pre><code class="language-bash">npm i webpack webpack-cli
+</code></pre>
+<h3 id="14配置webpack">1.4.配置webpack</h3>
+<ul>
+<li><code>webpack.config.js</code></li>
+</ul>
+<pre><code class="language-js">const path = require('path')
+module.exports = {
+  // 模式
+  mode: 'development', // 也可以使用 production
+  // 入口
+  entry: './src/index.js', 
+  // 出口
+  output: {
+    // 打包文件夹
+    path: path.resolve(__dirname, 'dist'),
+    // 打包文件
+    filename: 'yuzhilin-utils.js', 
+    // 向外暴露的对象的名称
+    library: 'yUtils',
+    // 打包生成库可以通过esm/commonjs/reqirejs的语法引入
+    libraryTarget: 'umd', 
+  },
+}
+</code></pre>
+<h3 id="15在入口js中暴露功能">1.5.在入口JS中暴露功能</h3>
+<ul>
+<li><code>src/index.js</code></li>
+</ul>
+<pre><code class="language-js">export function test() {
+  document.write('测试自定义包')
+  console.log('test()')
+}
+</code></pre>
+<h3 id="16配置打包命令">1.6.配置打包命令</h3>
+<ul>
+<li><code>packge.json</code></li>
+</ul>
+<pre><code class="language-json">&quot;scripts&quot;: {
+  &quot;build:watch&quot;: &quot;webpack --watch&quot;
+},
+</code></pre>
+<h3 id="17对项目进行打包">1.7.对项目进行打包</h3>
+<pre><code class="language-bash">npm run build:watch
+</code></pre>
+<h3 id="18测试使用自定义包">1.8.测试使用自定义包</h3>
+<ul>
+<li><code>test/first.html</code></li>
+</ul>
+<pre><code class="language-html">&lt;body&gt;
+  &lt;script src=&quot;../dist/yuzhilin-utils.js&quot;&gt;&lt;/script&gt;
+  &lt;script&gt;
+    yUtils.test()
+  &lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://capfour.github.io//post-images/1627437322386.png" alt="" loading="lazy"></figure>
+<h2 id="2-发布到npm中央仓库"><strong>2. 发布到npm中央仓库</strong></h2>
+<h3 id="21完善-packagejson">2.1.完善 package.json</h3>
+<ul>
+<li>注意：
+<ul>
+<li>name：必须是唯一的名称（npm线上中央仓库没有重复的名称）</li>
+<li>mian：必须指定为打包生成的js文件</li>
+<li>keywords：制定一些方便其他开发人员搜索当前库的关键字</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;utils&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;author&quot;: &quot;yuzhilin&quot;,
+  &quot;description&quot;: &quot;yuzhilin-前端-自定义工具函数库&quot;,
+  &quot;keywords&quot;: [
+    &quot;yuzhilin&quot;,
+    &quot;utils&quot;,
+    &quot;array&quot;,
+    &quot;object&quot;,
+    &quot;function&quot;,
+    &quot;string&quot;,
+    &quot;axios&quot;,
+    &quot;event-bus&quot;,
+    &quot;pub-sub&quot;,
+    &quot;promise&quot;
+  ],
+  &quot;main&quot;: &quot;dist/yuzhilin-utils.js&quot;,
+  &quot;license&quot;: &quot;MIT&quot;,
+  &quot;scripts&quot;: {
+    &quot;build:watch&quot;: &quot;webpack --watch&quot;,
+    &quot;build&quot;: &quot;webpack&quot;
+  },
+  &quot;devDependencies&quot;: {
+    &quot;webpack&quot;: &quot;^5.10.0&quot;,
+    &quot;webpack-cli&quot;: &quot;^4.2.0&quot;
+  }
+}
+</code></pre>
+<h3 id="22npm配置">2.2.npm配置</h3>
+<ul>
+<li>npm配置的中央仓库不能是淘宝镜像</li>
+<li>发布前必须执行: npm config set registry https://registry.npmjs.org/</li>
+<li>不用发布时: npm config set registry http://registry.npm.taobao.org/</li>
+<li>查看配置: npm config list</li>
+</ul>
+<h3 id="23注册npm中央仓库账号">2.3.注册npm中央仓库账号</h3>
+<ul>
+<li>注册地址: https://www.npmjs.com/</li>
+<li>关键信息: 用户名/密码/邮箱(需要验证)<br>
+<img src="https://capfour.github.io//post-images/1627437892691.jpg" alt="" loading="lazy"></li>
+</ul>
+<h3 id="24添加用户">2.4.添加用户</h3>
+<ul>
+<li>执行: npm addUser</li>
+<li>登陆npm仓库</li>
+<li>依次指定用户名/密码/邮箱<br>
+<img src="https://capfour.github.io//post-images/1627438226545.png" alt="" loading="lazy"></li>
+</ul>
+<h3 id="25发布仓库">2.5.发布仓库</h3>
+<ul>
+<li>执行npm publish<br>
+<img src="https://capfour.github.io//post-images/1627438509682.png" alt="" loading="lazy"></li>
+<li>发布失败（可能的两个原因：1、存在其他同名库，2、自己已经发布过同名库），修改一下package.json中的name为一个唯一值，在发布<br>
+<img src="https://capfour.github.io//post-images/1627438733957.png" alt="" loading="lazy"></li>
+</ul>
+<h3 id="26更新代码后发布">2.6.更新代码后发布</h3>
+<ul>
+<li>修改项目库的版本号: package.json 中的version 从1.0.0 改为1.0.1, 注意一定要变大</li>
+<li>修改代码后重新打包: npm run build</li>
+<li>执行发布: npm publish</li>
+</ul>
+<h3 id="27强制删除已发布的库">2.7.强制删除已发布的库</h3>
+<ul>
+<li>执行: npm unpublish --force</li>
+<li>注意: 必须在72小时内, 否则不能再删除</li>
+</ul>
+<h2 id="3使用自定义工具包"><strong>3.使用自定义工具包</strong></h2>
+<h3 id="31下载工具包">3.1.下载工具包</h3>
+<pre><code class="language-bash"># 名称是你前面指定的库的名称
+npm install y-utils2
+</code></pre>
+<h3 id="32网页中引入并使用">3.2.网页中引入并使用</h3>
+<pre><code class="language-html">&lt;script src=&quot;./node_modules/y-utils2/dist/yuzhilin-utils.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  yUtils.test()
+&lt;/script&gt;
+</code></pre>
+<h3 id="33模块化引入并使用">3.3.模块化引入并使用</h3>
+<pre><code class="language-js">// 使用ESM引入
+import {test} from 'a-utils2'
+test()
+
+// 使用commonjs引入
+const {test} = require('a-utils2')
+test()
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Vue3快速上手]]></title>
         <id>https://capfour.github.io/post/vue3-kuai-su-shang-shou/</id>
