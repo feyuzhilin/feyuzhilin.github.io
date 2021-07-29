@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://capfour.github.io/</id>
     <title>FEfour的笔记</title>
-    <updated>2021-07-28T06:02:45.076Z</updated>
+    <updated>2021-07-29T01:52:19.940Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://capfour.github.io/"/>
     <link rel="self" href="https://capfour.github.io/atom.xml"/>
@@ -10,6 +10,281 @@
     <logo>https://capfour.github.io/images/avatar.png</logo>
     <icon>https://capfour.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, FEfour的笔记</rights>
+    <entry>
+        <title type="html"><![CDATA[Promise浅析与自定义]]></title>
+        <id>https://capfour.github.io/post/promise-qian-xi-yu-zi-ding-yi/</id>
+        <link href="https://capfour.github.io/post/promise-qian-xi-yu-zi-ding-yi/">
+        </link>
+        <updated>2021-07-28T07:39:59.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="1-准备">1. 准备</h2>
+<h3 id="11-实例对象与函数对象">1.1 实例对象与函数对象</h3>
+<ul>
+<li>实例对象：new产生的对象，称为实例对象，简称对象</li>
+<li>函数对象：将函数作为对象使用时，简称为函数对象</li>
+<li>实例对象简称对象，函数对象不能简称为对象</li>
+<li>可以认为()左边的函数，.左边的是对象</li>
+<li>所以既可以在()前面又可以.前面的就是函数对象</li>
+</ul>
+<pre><code class="language-js">function Fn() { // 仅仅在这一步，此时不能说Fn是一个构造函数，只有new之后才能说为构造函数
+}
+const fn = new Fn() // 此时的Fn是构造函数，fn是实例对象(简称对象)
+console.log(Fn.prototype) // Fn为函数对象
+Fn.call({}) // Fn为函数对象
+$('#id') // 此时$成jQuery函数
+$.get('./test') // 此时的$称jQuery函数对象
+</code></pre>
+<p>原文链接：https://blog.csdn.net/weixin_43760969/article/details/108500756</p>
+<h3 id="12-两种类型的毁掉函数">1.2 两种类型的毁掉函数</h3>
+<h4 id="121-同步回调">1.2.1 同步回调</h4>
+<ul>
+<li>理解：立即执行，完全执行完了才结束，不会放入回调队列中</li>
+<li>例子：数组遍历相关的回调函数、Promise的excutor函数</li>
+</ul>
+<h4 id="122-异步回调">1.2.2 异步回调</h4>
+<ul>
+<li>理解：不会立刻执行，会放入回调队列中将来执行</li>
+<li>例子：定时器回调、ajax回调、Promise的成功｜失败的回调</li>
+</ul>
+<pre><code class="language-js">const arr = [1,2,3]
+arr.forEach(item=&gt;console.log(item)) // 同步回调，不会放入回调队列，而是立即执行
+console.log(&quot;forEach()之后&quot;)
+setTimeout(()=&gt;{ // 异步回调，会放入回调队列中，所有同步执行完后才可能执行
+    console.log('timeout回调')
+}，0)
+console.log('setTimeout之后')
+</code></pre>
+<h2 id="2-promise-的理解与使用">2 promise 的理解与使用</h2>
+<h3 id="21-什么是promise">2.1 什么是Promise</h3>
+<h4 id="211-理解">2.1.1 理解</h4>
+<ul>
+<li>抽象：Promise是JS中进行异步编程的新的解决方案（灵魂拷问：旧的是啥？）</li>
+<li>具体：
+<ul>
+<li>语法上：Promise是一个构造函数</li>
+<li>功能上：promise对象被用来封装一个异步操作并可以获取其结果</li>
+</ul>
+</li>
+</ul>
+<h4 id="212-promise的状态改变">2.1.2 promise的状态改变</h4>
+<ul>
+<li>pending --&gt; resolved</li>
+<li>pending --&gt; rejected<br>
+<code>说明：只存在这两种，并且一个promise对象的状态只能改变一次，无论成功或失败都会返回一个结果；一般来说成功的结果为value，失败的结果为reason</code></li>
+</ul>
+<h4 id="212-promise-的基本流程">2.1.2 promise 的基本流程</h4>
+<figure data-type="image" tabindex="1"><img src="https://capfour.github.io//post-images/1627461170625.png" alt="" loading="lazy"></figure>
+<h4 id="212-promise-的基本使用">2.1.2 promise 的基本使用</h4>
+<pre><code class="language-js">//1.创建promise对象
+const p = new Promise((resolve,reject) =&gt; {
+    //执行异步操作
+    setTimeout(() =&gt; {
+        const time = Data.now() //假设当前时间是奇数表示成功，偶数表示失败
+        //如果成功，调用resolve(value)
+        if(time%2 === 1){
+            resolve(`成功的结果${time}`)
+        }else{
+        //如果失败，调用reject(reason)
+            reject(`失败的结果${time}`)
+        }
+    },1000)
+})
+//2.通过promise的then()指定成功和失败的回调函数
+p.then(
+    value =&gt; {
+        console.log('成功的回调，value：'，value)
+    },
+    reason =&gt; {
+        console.log('失败的回调，reason：', reason)
+    }
+)
+</code></pre>
+<h3 id="22-为什么要用promise">2.2 为什么要用Promise？</h3>
+<h4 id="221-指定回调函数的方式更加灵活">2.2.1 指定回调函数的方式更加灵活</h4>
+<ul>
+<li>旧的：必须在启动异步任务前指定</li>
+<li>promise：启动异步任务 =&gt; 返回promise对象 =&gt; 给promise对象绑定回调函数（甚至可以在异步任务结束后指定/多个）</li>
+</ul>
+<h4 id="222-支持链式调用-可以解决回调地狱问题">2.2.2 支持链式调用, 可以解决回调地狱问题</h4>
+<ul>
+<li>什么是回调地狱？
+<ul>
+<li>回调函数的嵌套调用，外部回调函数异步执行的结果是嵌套的回调执行的条件（此处自行脑补下俄罗斯套娃）</li>
+</ul>
+</li>
+<li>回调地狱的缺点？
+<ul>
+<li>不便于阅读</li>
+<li>不便于异常处理</li>
+</ul>
+</li>
+<li>解决方案？
+<ul>
+<li>promise的链式调用</li>
+</ul>
+</li>
+<li>终极解决方案
+<ul>
+<li>async/await</li>
+</ul>
+</li>
+<li>上代码</li>
+</ul>
+<pre><code class="language-js">&lt;script&gt;
+    // 成功的回调函数 
+    successCallback(result) { console.log(&quot;声音文件创建成功: &quot; + result); }
+    // 失败的回调函数 
+    failureCallback(error) { console.log(&quot;声音文件创建失败: &quot; + error); }
+
+    /* 1.1 使用纯回调函数 */ 
+    createAudioFileAsync(audioSettings, successCallback, failureCallback)
+
+    /* 1.2. 使用 Promise */ 
+    const promise = createAudioFileAsync(audioSettings); // 2 
+    setTimeout(() =&gt; { 
+        promise.then(successCallback, failureCallback); 
+    }, 3000);
+
+    /*2.1. 回调地狱 */
+    doSomething(function(result) {
+        doSomethingElse(result, function(newResult) {
+            doThirdThing(newResult, function(finalResult) {
+                console.log('Got the final result: ' + finalResult) 
+            }, failureCallback)
+        }, failureCallback)
+    }, failureCallback) 
+
+    /*2.2. 使用 promise 的链式调用解决回调地狱 */
+    doSomething().then(function(result) {
+        return doSomethingElse(result) 
+    })
+    .then(function(newResult) { 
+        return doThirdThing(newResult) 
+    })
+    .then(function(finalResult) {
+        console.log('Got the final result: ' + finalResult)
+    })
+    .catch(failureCallback) 
+    
+    /*2.3. async/await: 回调地狱的终极解决方案 */
+    async function request() { 
+        try { 
+            const result = await doSomething() 
+            const newResult = await doSomethingElse(result) 
+            const finalResult = await doThirdThing(newResult) 
+            console.log('Got the final result: ' + finalResult) 
+        } catch (error) {
+            failureCallback(error) 
+        }
+    } 
+&lt;/script&gt;
+</code></pre>
+<h3 id="23-如何使用-promise">2.3 如何使用 Promise?</h3>
+<h4 id="231-api">2.3.1 API</h4>
+<ul>
+<li>
+<p>Promise 构造函数：Promise(excutor){}</p>
+<ul>
+<li>excutor 函数：执行器 （resolve, reject）=&gt; {}</li>
+<li>resolve 函数：内部定义为成功时我们调用的函数 value =&gt; {}</li>
+<li>reject 函数: 内部定义为失败时我们调用的函数 reason =&gt; {}</li>
+<li><code>说明: excutor 会在 Promise 内部立即同步回调,异步操作在执行器中执行</code></li>
+</ul>
+</li>
+<li>
+<p>Promise.prototype.then 方法: (onResolved, onRejected) =&gt; {}</p>
+<ul>
+<li>onResolved 函数: 成功的回调函数 (value) =&gt; {}</li>
+<li>onRejected 函数: 失败的回调函数 (reason) =&gt; {}</li>
+<li><code>指定用于得到成功 value 的成功回调和用于得到失败 reason 的失败回调 返回一个新的 promise 对象</code></li>
+</ul>
+</li>
+<li>
+<p>Promise.prototype.catch 方法: (onRejected) =&gt; {} (1) onRejected 函数: 失败的回调函数 (reason) =&gt; {} 说明: then()的语法糖, 相当于: then(undefined, onRejected)</p>
+</li>
+<li>
+<p>Promise.resolve 方法: (value) =&gt; {} (1) value: 成功的数据或 promise 对象 说明: 返回一个成功/失败的 promise 对象</p>
+</li>
+<li>
+<p>Promise.reject 方法: (reason) =&gt; {} (1) reason: 失败的原因 说明: 返回一个失败的 promise 对象</p>
+</li>
+<li>
+<p>Promise.all 方法: (promises) =&gt; {} (1) promises: 包含 n 个 promise 的数组 说明: 返回一个新的 promise, 只有所有的 promise 都成功才成功, 只要有一个失败了就 直接失败</p>
+</li>
+<li>
+<p>Promise.race 方法: (promises) =&gt; {} (1) promises: 包含 n 个 promise 的数组 说明: 返回一个新的 promise, 第一个完成的 promise 的结果状态就是最终的结果状态</p>
+</li>
+</ul>
+<h4 id="232-promise-的几个关键问题">2.3.2 promise 的几个关键问题</h4>
+<ul>
+<li>
+<p>如何改变 promise 的状态?</p>
+<ul>
+<li>resolve(value): 如果当前是 pendding 就会变为 resolved</li>
+<li>reject(reason): 如果当前是 pendding 就会变为 rejected</li>
+<li>抛出异常: 如果当前是 pendding 就会变为 rejected</li>
+</ul>
+</li>
+<li>
+<p>一个 promise 指定多个成功/失败回调函数, 都会调用吗?</p>
+<ul>
+<li>当 promise 改变为对应状态时都会调用</li>
+</ul>
+</li>
+<li>
+<p>改变 promise 状态和指定回调函数谁先谁后?</p>
+<ul>
+<li>都有可能, 正常情况下是先指定回调再改变状态, 但也可以先改状态再指定回调</li>
+<li>如何先改状态再指定回调?
+<ul>
+<li>在执行器中直接调用 resolve()/reject()</li>
+<li>延迟更长时间才调用 then()</li>
+</ul>
+</li>
+<li>什么时候才能得到数据?
+<ul>
+<li>如果先指定的回调, 那当状态发生改变时, 回调函数就会调用, 得到数据</li>
+<li>如果先改变的状态, 那当指定回调时, 回调函数就会调用, 得到数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>promise.then()返回的新 promise 的结果状态由什么决定?</p>
+<ul>
+<li>简单表达: 由 then()指定的回调函数执行的结果决定</li>
+<li>详细表达:
+<ul>
+<li>如果抛出异常, 新 promise 变为 rejected, reason 为抛出的异常</li>
+<li>如果返回的是非 promise 的任意值, 新 promise 变为 resolved, value 为返回的值</li>
+<li>如果返回的是另一个新 promise, 此 promise 的结果就会成为新 promise 的结果</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>promise 如何串连多个操作任务?</p>
+<ul>
+<li>promise 的 then()返回一个新的 promise, 可以开成 then()的链式调用</li>
+<li>通过 then 的链式调用串连多个同步/异步任务</li>
+</ul>
+</li>
+<li>
+<p>promise 异常传透?</p>
+<ul>
+<li>当使用 promise 的 then 链式调用时, 可以在最后指定失败的回调,</li>
+<li>前面任何操作出了异常, 都会传到最后失败的回调中处理</li>
+</ul>
+</li>
+<li>
+<p>中断 promise 链?</p>
+<ul>
+<li>当使用 promise 的 then 链式调用时, 在中间中断, 不再调用后面的回调函数</li>
+<li>办法: 在回调函数中返回一个 pendding 状态的 promise 对象</li>
+</ul>
+</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[自定义工具库]]></title>
         <id>https://capfour.github.io/post/zi-ding-yi-gong-ju-ku/</id>
@@ -177,11 +452,11 @@ npm install y-utils2
 </code></pre>
 <h3 id="33模块化引入并使用">3.3.模块化引入并使用</h3>
 <pre><code class="language-js">// 使用ESM引入
-import {test} from 'a-utils2'
+import {test} from 'y-utils2'
 test()
 
 // 使用commonjs引入
-const {test} = require('a-utils2')
+const {test} = require('y-utils2')
 test()
 </code></pre>
 ]]></content>
