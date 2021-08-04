@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Vue3快速上手 | FEfour的笔记</title>
-<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1627529506525">
+<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1628066682364">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://capfour.github.io//styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Vue3快速上手 | FEfour的笔记 - Atom Feed" href="https://capfour.github.io//atom.xml">
@@ -26,7 +26,7 @@ github上的tags地址：https://githu..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://capfour.github.io/">
-  <img class="avatar" src="https://capfour.github.io//images/avatar.png?v=1627529506525" alt="">
+  <img class="avatar" src="https://capfour.github.io//images/avatar.png?v=1628066682364" alt="">
   </a>
   <h1 class="site-title">
     FEfour的笔记
@@ -68,7 +68,7 @@ github上的tags地址：https://githu..." />
                 2021-07-27
               </span>
               <span>
-                16 min read
+                17 min read
               </span>
               
             </div>
@@ -473,6 +473,44 @@ watchEffect(()=&gt;{
 <p>自定义hook的优势: 复用代码, 让setup中的逻辑更清楚易懂。</p>
 </li>
 </ul>
+<p>例子：点击页面获取坐标功能<br>
+<code>src/hooks/usePoint.js</code></p>
+<pre><code class="language-js">import { onBeforeUnmount, onMounted,ref } from &quot;vue&quot;;
+export default function () {
+    const x = ref(&quot;0&quot;)
+    const y = ref(&quot;0&quot;)
+    const pageHander = e =&gt; {
+      x.value=e.pageX;
+      y.value=e.pageY;
+    }
+
+    // 在页面挂载完成添加事件监听
+    onMounted(()=&gt;{
+      window.addEventListener(&quot;click&quot;,pageHander)
+    })
+    // 在页面即将卸载时，移除事件的监听
+    onBeforeUnmount(()=&gt;{
+      window.removeEventListener(&quot;click&quot;,pageHander )
+    })
+    return {x,y}
+}
+</code></pre>
+<p>使用：</p>
+<pre><code class="language-js">&lt;template&gt;
+    &lt;p&gt;横坐标{{x}}&lt;/p&gt;
+    &lt;p&gt;纵坐标{{y}}&lt;/p&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import usePoint from &quot;../src/hooks/usePoint.js&quot;
+export default {
+  name: &quot;App&quot;,
+  setup() {
+   let { x,y } = usePoint()
+   return { x, y }
+  }
+};
+&lt;/script&gt;
+</code></pre>
 <h2 id="10toref">10.toRef</h2>
 <ul>
 <li>

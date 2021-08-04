@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://capfour.github.io/</id>
     <title>FEfour的笔记</title>
-    <updated>2021-07-30T09:41:44.315Z</updated>
+    <updated>2021-08-04T08:44:46.162Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://capfour.github.io/"/>
     <link rel="self" href="https://capfour.github.io/atom.xml"/>
@@ -1071,6 +1071,44 @@ watchEffect(()=&gt;{
 <p>自定义hook的优势: 复用代码, 让setup中的逻辑更清楚易懂。</p>
 </li>
 </ul>
+<p>例子：点击页面获取坐标功能<br>
+<code>src/hooks/usePoint.js</code></p>
+<pre><code class="language-js">import { onBeforeUnmount, onMounted,ref } from &quot;vue&quot;;
+export default function () {
+    const x = ref(&quot;0&quot;)
+    const y = ref(&quot;0&quot;)
+    const pageHander = e =&gt; {
+      x.value=e.pageX;
+      y.value=e.pageY;
+    }
+
+    // 在页面挂载完成添加事件监听
+    onMounted(()=&gt;{
+      window.addEventListener(&quot;click&quot;,pageHander)
+    })
+    // 在页面即将卸载时，移除事件的监听
+    onBeforeUnmount(()=&gt;{
+      window.removeEventListener(&quot;click&quot;,pageHander )
+    })
+    return {x,y}
+}
+</code></pre>
+<p>使用：</p>
+<pre><code class="language-js">&lt;template&gt;
+    &lt;p&gt;横坐标{{x}}&lt;/p&gt;
+    &lt;p&gt;纵坐标{{y}}&lt;/p&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import usePoint from &quot;../src/hooks/usePoint.js&quot;
+export default {
+  name: &quot;App&quot;,
+  setup() {
+   let { x,y } = usePoint()
+   return { x, y }
+  }
+};
+&lt;/script&gt;
+</code></pre>
 <h2 id="10toref">10.toRef</h2>
 <ul>
 <li>
