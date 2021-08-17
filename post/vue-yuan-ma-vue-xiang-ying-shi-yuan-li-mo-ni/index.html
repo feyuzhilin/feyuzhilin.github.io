@@ -3,10 +3,10 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Vue源码(二)-Vue响应式原理模拟 | FEfour的笔记</title>
-<link rel="shortcut icon" href="https://capfour.github.io//favicon.ico?v=1628066822278">
+<link rel="shortcut icon" href="https://feyuzhilin.github.io//favicon.ico?v=1628066822278">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://capfour.github.io//styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Vue源码(二)-Vue响应式原理模拟 | FEfour的笔记 - Atom Feed" href="https://capfour.github.io//atom.xml">
+<link rel="stylesheet" href="https://feyuzhilin.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Vue源码(二)-Vue响应式原理模拟 | FEfour的笔记 - Atom Feed" href="https://feyuzhilin.github.io//atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -33,8 +33,8 @@ Observer
     <div class="main">
       <div class="main-content">
         <div class="site-header">
-  <a href="https://capfour.github.io/">
-  <img class="avatar" src="https://capfour.github.io//images/avatar.png?v=1628066822278" alt="">
+  <a href="https://feyuzhilin.github.io/">
+  <img class="avatar" src="https://feyuzhilin.github.io//images/avatar.png?v=1628066822278" alt="">
   </a>
   <h1 class="site-title">
     FEfour的笔记
@@ -88,7 +88,7 @@ Observer
 <li>Vue基本结构</li>
 <li>Vue 实例内容</li>
 <li>整体结构<br>
-<img src="https://capfour.github.io//post-images/1625796652037.jpg" alt="" loading="lazy"></li>
+<img src="https://feyuzhilin.github.io//post-images/1625796652037.jpg" alt="" loading="lazy"></li>
 <li>Vue
 <ul>
 <li>把data中的成员注入到Vue实例，并且把data中的成员转成getter/setter</li>
@@ -126,7 +126,7 @@ Observer
 </ul>
 </li>
 <li>结构<br>
-<img src="https://capfour.github.io//post-images/1625813961500.jpg" alt="" loading="lazy"></li>
+<img src="https://feyuzhilin.github.io//post-images/1625813961500.jpg" alt="" loading="lazy"></li>
 <li>代码<pre><code class="language-js"></code></pre>
 </li>
 </ul>
@@ -160,7 +160,7 @@ this.<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>e
     - data中的某个属性也是对象，把该属性转换成响应式数据
     - 数据变化发送通知
 - 结构
-![](https://capfour.github.io//post-images/1625814958011.jpg)
+![](https://feyuzhilin.github.io//post-images/1625814958011.jpg)
 - 代码
 ```js
 //负责数据劫持,把$data中的成员转换成 getter/setter
@@ -207,7 +207,7 @@ class Observer {
 </ul>
 </li>
 <li>结构<br>
-<img src="https://capfour.github.io//post-images/1625820312200.jpg" alt="" loading="lazy"></li>
+<img src="https://feyuzhilin.github.io//post-images/1625820312200.jpg" alt="" loading="lazy"></li>
 </ul>
 <h4 id="compile"><strong>compile</strong></h4>
 <pre><code class="language-js">//负责解析指令/插值表达式
@@ -317,7 +317,7 @@ modelUpdater (node, value){
 }
 </code></pre>
 <h4 id="depdependency"><strong>Dep(Dependency)</strong></h4>
-<figure data-type="image" tabindex="1"><img src="https://capfour.github.io//post-images/1626329292374.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://feyuzhilin.github.io//post-images/1626329292374.png" alt="" loading="lazy"></figure>
 <ul>
 <li>功能
 <ul>
@@ -326,7 +326,7 @@ modelUpdater (node, value){
 </ul>
 </li>
 <li>结构<br>
-<img src="https://capfour.github.io//post-images/1626329374340.png" alt="" loading="lazy"></li>
+<img src="https://feyuzhilin.github.io//post-images/1626329374340.png" alt="" loading="lazy"></li>
 <li>代码</li>
 </ul>
 <pre><code class="language-js">    class Dep {
@@ -364,7 +364,7 @@ Dep.tatget &amp;&amp; dep.addSub(Dep.target)
 dep.notify()
 </code></pre>
 <h4 id="watcher"><strong>Watcher</strong></h4>
-<figure data-type="image" tabindex="2"><img src="https://capfour.github.io//post-images/1626933769169.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://feyuzhilin.github.io//post-images/1626933769169.png" alt="" loading="lazy"></figure>
 <ul>
 <li>功能
 <ul>
@@ -373,7 +373,7 @@ dep.notify()
 </ul>
 </li>
 <li>结构<br>
-<img src="https://capfour.github.io//post-images/1626933919252.png" alt="" loading="lazy"></li>
+<img src="https://feyuzhilin.github.io//post-images/1626933919252.png" alt="" loading="lazy"></li>
 <li>代码</li>
 </ul>
 <pre><code class="language-js">class Watcher {
@@ -465,7 +465,7 @@ modelUpdater (node,value,key) {
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://capfour.github.io/post/vue-yuan-ma-shu-ju-xiang-ying-shi-yuan-li/">
+            <a href="https://feyuzhilin.github.io/post/vue-yuan-ma-shu-ju-xiang-ying-shi-yuan-li/">
               <h3 class="post-title">
                 vue源码(一)-数据响应式原理
               </h3>
@@ -477,7 +477,7 @@ modelUpdater (node,value,key) {
 
         <div class="site-footer">
   无限进步
-  <a class="rss" href="https://capfour.github.io//atom.xml" target="_blank">
+  <a class="rss" href="https://feyuzhilin.github.io//atom.xml" target="_blank">
     <i class="ri-rss-line"></i> RSS
   </a>
 </div>
